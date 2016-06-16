@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Universidad de La Frontera
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="orm.Actividad" table="actividad" lazy="false">
+		<id name="uid_act" column="uid_act" type="integer" unsaved-value="0">
+			<generator class="increment">
+			</generator>
+		</id>
+		<property name="fecha_act" column="fecha_act" type="string" length="25" not-null="false" lazy="false">
+			<meta attribute="field-description">
+				Fecha de la Actividad
+			</meta>
+		</property>
+		<property name="nombre_act" column="nombre_act" type="string" length="100" not-null="false" lazy="false">
+			<meta attribute="field-description">
+				Nombre de la Actividad
+			</meta>
+		</property>
+		<property name="descripcion_act" column="descripcion_act" type="string" length="512" not-null="false" lazy="false">
+			<meta attribute="field-description">
+				Descripcion de la actividad
+			</meta>
+		</property>
+		<many-to-one name="idGrupo" cascade="lock" column="idGrupo" class="orm.Grupo_contacto" not-null="true" lazy="no-proxy" access="field">
+		</many-to-one>
+		<set name="ORM_Actividad_leida" lazy="true" cascade="save-update,lock" inverse="true">
+			<key column="idActividad" not-null="true"/>
+			<one-to-many class="orm.Actividad_leida"/>
+		</set>
+	</class>
+</hibernate-mapping>

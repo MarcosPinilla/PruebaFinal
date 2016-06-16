@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Universidad de La Frontera
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="orm.Membresia" table="membresia" lazy="false">
+		<id name="uid_mem" column="uid_mem" type="integer" unsaved-value="0">
+			<generator class="increment">
+			</generator>
+		</id>
+		<many-to-one name="idGrupoContacto" cascade="lock" column="idGrupoContacto" class="orm.Grupo_contacto" not-null="true" lazy="no-proxy" access="field">
+		</many-to-one>
+		<many-to-one name="idContacto" cascade="lock" column="idContacto" class="orm.Contacto" not-null="true" lazy="no-proxy" access="field">
+		</many-to-one>
+	</class>
+</hibernate-mapping>

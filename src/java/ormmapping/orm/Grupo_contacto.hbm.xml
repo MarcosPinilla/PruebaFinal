@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Universidad de La Frontera
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="orm.Grupo_contacto" table="grupo_contacto" lazy="false">
+		<id name="uid_grupo" column="uid_grupo" type="integer" unsaved-value="0">
+			<generator class="increment">
+			</generator>
+		</id>
+		<property name="nombre_grupo" column="nombre_grupo" type="string" length="100" not-null="true" lazy="false">
+			<meta attribute="field-description">
+				Nombre del Grupo de Contactos
+			</meta>
+		</property>
+		<property name="descripcion_grupo" column="descripcion_grupo" type="string" length="512" not-null="false" lazy="false">
+			<meta attribute="field-description">
+				Descripcion del Grupo
+			</meta>
+		</property>
+		<property name="fecha_grupo" column="fecha_grupo" type="string" length="100" not-null="true" lazy="false"/>
+		<set name="ORM_Membresia" lazy="true" cascade="save-update,lock" inverse="true">
+			<key column="idGrupoContacto" not-null="true"/>
+			<one-to-many class="orm.Membresia"/>
+		</set>
+		<set name="ORM_Actividad" lazy="true" cascade="save-update,lock" inverse="true">
+			<key column="idGrupo" not-null="true"/>
+			<one-to-many class="orm.Actividad"/>
+		</set>
+		<set name="ORM_Notificacion" lazy="true" cascade="save-update,lock" inverse="true">
+			<key column="idGrupo" not-null="true"/>
+			<one-to-many class="orm.Notificacion"/>
+		</set>
+	</class>
+</hibernate-mapping>

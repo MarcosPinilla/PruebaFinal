@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Universidad de La Frontera
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="orm.Notificacion_leida" table="notificacion_leida" lazy="false">
+		<id name="uid_lenot" column="uid_lenot" type="integer" unsaved-value="0">
+			<generator class="increment">
+			</generator>
+		</id>
+		<property name="lectura_lenot" column="lectura_lenot" type="integer" length="10" not-null="true" lazy="false">
+			<meta attribute="field-description">
+				Registra si fue leido(1) o no(0)
+			</meta>
+		</property>
+		<many-to-one name="idContacto" cascade="lock" column="idContacto" class="orm.Contacto" not-null="true" lazy="no-proxy" access="field">
+		</many-to-one>
+		<many-to-one name="idNotificacion" cascade="lock" column="idNotificacion" class="orm.Notificacion" not-null="true" lazy="no-proxy" access="field">
+		</many-to-one>
+		<property name="visto_lenot" column="visto_lenot" type="string" length="255" not-null="true" lazy="false"/>
+	</class>
+</hibernate-mapping>

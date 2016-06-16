@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model quotesql="1" tablecharset="" mysql_version="504" mssql_version="2005" derby_version="106" ingres_version="9">
+  <Entity name="contacto" PKClustered="0">
+    <Column name="uid_cont">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>increment</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="nombre_cont">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>100</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Nombre del Contacto</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="apellido_cont">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>100</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Apellido del Contacto</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="mail_cont">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>50</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Mail del Contactp</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="telefono_cont">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>20</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Telefono del Contacto</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="ciudad_cont">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Ciudad del Contacto</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="organizacion_cont">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>organizacion del contacto</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="imagen_cont">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>512</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Imagen del Contacto</Comment>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="membresia" PKClustered="0">
+    <Column name="uid_mem">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>increment</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Uid de la Membresia</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="idGrupoContacto">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>grupo_contacto.uid_grupo</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>id del grupo del contacto</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="idContacto">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>contacto.uid_cont</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>id del contacto</Comment>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="grupo_contacto" PKClustered="0">
+    <Column name="uid_grupo">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>increment</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Uid del grupo</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="nombre_grupo">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>100</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Nombre del Grupo de Contactos</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="descripcion_grupo">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>512</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Descripcion del Grupo</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="fecha_grupo">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>100</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="actividad" PKClustered="0">
+    <Column name="uid_act">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>increment</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Uid de la actividad</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="fecha_act">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>25</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Fecha de la Actividad</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="nombre_act">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>100</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Nombre de la Actividad</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="descripcion_act">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>512</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Descripcion de la actividad</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="idGrupo">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>grupo_contacto.uid_grupo</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Uid del grupo de contactos al que pertenece la actividad</Comment>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="notificacion" PKClustered="0">
+    <Column name="uid_noti">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>increment</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Uid de la notificacion</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="fecha_noti">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>25</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Fecha de la notificacion</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="mensaje_noti">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Contenido de la notificacion</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="idGrupo">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>grupo_contacto.uid_grupo</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>id del grupo al que va dirigida la notificacion</Comment>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="actividad_leida" PKClustered="0">
+    <Column name="uid_leact">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>increment</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Uid de la actividad leida</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="nombre_leact">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Registra si fue leido (1) o no (0)</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="idContacto">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>contacto.uid_cont</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>id del contacto al que le llego la actividad</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="idActividad">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>actividad.uid_act</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Id de la actividad que le llego al contacto</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="visto_leact">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="notificacion_leida" PKClustered="0">
+    <Column name="uid_lenot">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>increment</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Uid  de la notificaion leida</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="lectura_lenot">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Registra si fue leido(1) o no(0)</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="idContacto">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>contacto.uid_cont</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>id del contacto</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="idNotificacion">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>notificacion.uid_noti</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <Comment>Id de la notificacion</Comment>
+      <UserTypes/>
+    </Column>
+    <Column name="visto_lenot">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <ForeignKey name="FKmembresia392047">
+    <ReferenceTable>membresia</ReferenceTable>
+    <ReferencedTable>contacto</ReferencedTable>
+    <Columns>
+      <Column>idContacto</Column>
+    </Columns>
+    <RefColumns>
+      <Column>uid_cont</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKmembresia792148">
+    <ReferenceTable>membresia</ReferenceTable>
+    <ReferencedTable>grupo_contacto</ReferencedTable>
+    <Columns>
+      <Column>idGrupoContacto</Column>
+    </Columns>
+    <RefColumns>
+      <Column>uid_grupo</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKactividad118420">
+    <ReferenceTable>actividad</ReferenceTable>
+    <ReferencedTable>grupo_contacto</ReferencedTable>
+    <Columns>
+      <Column>idGrupo</Column>
+    </Columns>
+    <RefColumns>
+      <Column>uid_grupo</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKnotificaci7215">
+    <ReferenceTable>notificacion</ReferenceTable>
+    <ReferencedTable>grupo_contacto</ReferencedTable>
+    <Columns>
+      <Column>idGrupo</Column>
+    </Columns>
+    <RefColumns>
+      <Column>uid_grupo</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKactividad_12387">
+    <ReferenceTable>actividad_leida</ReferenceTable>
+    <ReferencedTable>actividad</ReferencedTable>
+    <Columns>
+      <Column>idActividad</Column>
+    </Columns>
+    <RefColumns>
+      <Column>uid_act</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKnotificaci479835">
+    <ReferenceTable>notificacion_leida</ReferenceTable>
+    <ReferencedTable>notificacion</ReferencedTable>
+    <Columns>
+      <Column>idNotificacion</Column>
+    </Columns>
+    <RefColumns>
+      <Column>uid_noti</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKactividad_929185">
+    <ReferenceTable>actividad_leida</ReferenceTable>
+    <ReferencedTable>contacto</ReferencedTable>
+    <Columns>
+      <Column>idContacto</Column>
+    </Columns>
+    <RefColumns>
+      <Column>uid_cont</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKnotificaci794716">
+    <ReferenceTable>notificacion_leida</ReferenceTable>
+    <ReferencedTable>contacto</ReferencedTable>
+    <Columns>
+      <Column>idContacto</Column>
+    </Columns>
+    <RefColumns>
+      <Column>uid_cont</Column>
+    </RefColumns>
+  </ForeignKey>
+</Model>

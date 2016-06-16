@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Universidad de La Frontera
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="orm.Actividad_leida" table="actividad_leida" lazy="false">
+		<id name="uid_leact" column="uid_leact" type="integer" unsaved-value="0">
+			<generator class="increment">
+			</generator>
+		</id>
+		<property name="nombre_leact" column="nombre_leact" type="integer" length="10" not-null="true" lazy="false">
+			<meta attribute="field-description">
+				Registra si fue leido (1) o no (0)
+			</meta>
+		</property>
+		<many-to-one name="idContacto" cascade="lock" column="idContacto" class="orm.Contacto" not-null="true" lazy="no-proxy" access="field">
+		</many-to-one>
+		<many-to-one name="idActividad" cascade="lock" column="idActividad" class="orm.Actividad" not-null="true" lazy="no-proxy" access="field">
+		</many-to-one>
+		<property name="visto_leact" column="visto_leact" type="string" length="255" not-null="true" lazy="false"/>
+	</class>
+</hibernate-mapping>
