@@ -296,6 +296,36 @@ public class Servicio {
     /**
      * Web service operation
      */
+    @WebMethod(operationName = "busquedaAvanzadaGrupoContactoServicioWeb")
+    public String busquedaAvanzadaGrupoContactoServicioWeb(@WebParam(name = "nombreGrupo") String nombreGrupo, 
+            @WebParam(name = "descripcionGrupo") String descripcionGrupo) {
+        String listaResultado = "";
+        List<capaNegocio.Grupo_contacto> lista = new ArrayList<capaNegocio.Grupo_contacto>();
+        capaNegocio.Grupo_contacto grupo = new capaNegocio.Grupo_contacto();
+        if (nombreGrupo != null){
+                grupo.setNombre_grupo(nombreGrupo);
+        }else{
+                grupo.setNombre_grupo("");
+        }
+        if (descripcionGrupo != null){
+                grupo.setDescripcion_grupo(descripcionGrupo);
+        }else{
+                grupo.setDescripcion_grupo("");
+        }
+        
+        Gson gson = new GsonBuilder().create();
+        try{
+                lista = grupo.busquedaAvanzadaGrupoContactoCapaNegocio(grupo);
+                listaResultado = gson.toJson(lista);
+        }catch(PersistentException ex){
+                listaResultado = null;
+        }
+        return listaResultado;
+    }
+    
+    /**
+     * Web service operation
+     */
     @WebMethod(operationName = "agregarContactoAGrupoServicioWeb")
     public String agregarContactoAGrupoServicioWeb(@WebParam(name = "uid_cont") String uid_cont, @WebParam(name = "uid_grupo") String uid_grupo) throws PersistentException {
         String respuesta = "No se pudo asociar el contacto al grupo";

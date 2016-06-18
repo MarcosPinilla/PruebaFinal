@@ -133,9 +133,33 @@ public class Grupo_contacto {
                 return listaGrupoContacto;
 	}
 
-	public List<Grupo_contacto> busquedaAvanzadaGrupoContactoCapaNegocio(Grupo_contacto grupoContacto) {
+	public List<Grupo_contacto> busquedaAvanzadaGrupoContactoCapaNegocio(Grupo_contacto grupoContacto) throws PersistentException {
 		// TODO - implement Grupo_contacto.busquedaAvanzadaGrupoContactoCapaNegocio
-		throw new UnsupportedOperationException();
+            List<Grupo_contacto> listaGrupo = new ArrayList<Grupo_contacto>();
+            List<orm.Grupo_contacto> listaGrupos = new ArrayList<orm.Grupo_contacto>();
+            String query = "";
+            if (grupoContacto.getNombre_grupo() != null && !grupoContacto.getNombre_grupo().equals("")){
+                    query += "Grupo_contacto.nombre_grupo='" + grupoContacto.getNombre_grupo() + "' ";
+            }
+            if ((grupoContacto.getNombre_grupo() != null && !grupoContacto.getNombre_grupo().trim().equals("")) && 
+               (grupoContacto.getDescripcion_grupo() != null && !grupoContacto.getDescripcion_grupo().trim().equals(""))){
+                    query += "and ";
+            }
+            if (grupoContacto.getDescripcion_grupo() != null && !grupoContacto.getDescripcion_grupo().trim().equals("")){
+                    query += "Grupo_contacto.descripcion_grupo='" + grupoContacto.getDescripcion_grupo() + "' ";
+            }
+            listaGrupos = orm.Grupo_contactoDAO.queryGrupo_contacto(query, null);
+            if (listaGrupos != null){
+                for (orm.Grupo_contacto grupoContactoOrm : listaGrupos){
+                    Grupo_contacto grupoNegocio = new Grupo_contacto();
+                    grupoNegocio.setUid_grupo(grupoContactoOrm.getUid_grupo());
+                    grupoNegocio.setNombre_grupo(grupoContactoOrm.getNombre_grupo());
+                    grupoNegocio.setDescripcion_grupo(grupoContactoOrm.getDescripcion_grupo());
+                    grupoNegocio.setFecha_grupo();
+                    listaGrupo.add(grupoNegocio);
+                }
+            }
+            return listaGrupo;
 	}
 
 	public List<Grupo_contacto> busquedaMiembros(Grupo_contacto grupoContacto) {
