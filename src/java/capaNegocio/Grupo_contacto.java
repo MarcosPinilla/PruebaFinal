@@ -161,7 +161,7 @@ public class Grupo_contacto {
 	
 
 	   public List<Contacto> busquedaMiembrosCapaNegocio(Grupo_contacto grupo) throws PersistentException {
-        //Membresia[] listaMS = contactoOrm.Membresia.toArray();
+        
         List<Contacto> listaContacto = new ArrayList<Contacto>();
         List<orm.Membresia> listaMembs = new ArrayList<orm.Membresia>();
         int idGrupo = grupo.getUid_grupo();
