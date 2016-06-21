@@ -284,5 +284,31 @@ public class Contacto {
             }
             return listaMC;
 	}
+        
+         /**
+     * 
+     * @param textoBusqueda
+     */
+    public List<Contacto> busquedaIdContactoCapaNegocio(String busqueda) throws PersistentException {
+        List<Contacto> listaContacto = new ArrayList<Contacto>();
+        List<orm.Contacto> listaContactos = new ArrayList<orm.Contacto>();
+        if (busqueda != null || !busqueda.equals("")){
+            listaContactos = orm.ContactoDAO.queryContacto("Contacto.uid_Cont='" + busqueda + "' ", null);
+        }
+        if (listaContactos != null){
+            for (orm.Contacto contactoOrm : listaContactos){
+                Contacto contactoNegocio = new Contacto();
+                contactoNegocio.setNombre_cont(contactoOrm.getNombre_cont());
+                contactoNegocio.setApellido_cont(contactoOrm.getApellido_cont());
+                contactoNegocio.setTelefono_cont(contactoOrm.getTelefono_cont());
+                contactoNegocio.setMail_cont(contactoOrm.getMail_cont());
+                contactoNegocio.setCiudad_cont(contactoOrm.getCiudad_cont());
+                contactoNegocio.setOrganizacion_cont(contactoOrm.getOrganizacion_cont());
+                listaContacto.add(contactoNegocio);
+            }
+        }
+        //System.out.println("hola " + listaContacto);
+        return listaContacto;
+    }
 
 }

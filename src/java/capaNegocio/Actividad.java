@@ -29,11 +29,8 @@ public class Actividad {
 		this.fecha_act = fecha_act;
 	}*/
 
-        public void setFecha_act(){
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            Date fecha = new Date();
-            String fechaCadena = sdf.format(fecha);
-		this.fecha_act = fechaCadena;
+        public void setFecha_act(String fecha){    
+		this.fecha_act = fecha;
         }
         
 	public String getNombre_act() {

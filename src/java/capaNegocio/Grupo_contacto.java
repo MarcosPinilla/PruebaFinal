@@ -42,11 +42,9 @@ public class Grupo_contacto {
 		return this.fecha_grupo;
 	}
 
-	public void setFecha_grupo() {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            Date fecha = new Date();
-            String fechaCadena = sdf.format(fecha);
-		this.fecha_grupo = fechaCadena;
+	public void setFecha_grupo(String loco) {
+            
+		this.fecha_grupo = loco;
 	}
 
 	public int agregarGrupoCapaNegocio(Grupo_contacto grupoContacto) throws PersistentException{
@@ -126,22 +124,54 @@ public class Grupo_contacto {
                         grupoContactoNegocio.setUid_grupo(grupoContactoOrm.getUid_grupo());
                         grupoContactoNegocio.setNombre_grupo(grupoContactoOrm.getNombre_grupo());
                         grupoContactoNegocio.setDescripcion_grupo(grupoContactoOrm.getDescripcion_grupo());
-                        grupoContactoNegocio.setFecha_grupo();
+                        grupoContactoNegocio.setFecha_grupo(grupoContactoOrm.getFecha_grupo());
                         listaGrupoContacto.add(grupoContactoNegocio);
                     }
                 }
                 return listaGrupoContacto;
 	}
 
-	public List<Grupo_contacto> busquedaAvanzadaGrupoContactoCapaNegocio(Grupo_contacto grupoContacto) {
+	public List<Grupo_contacto> busquedaAvanzadaGrupoContactoCapaNegocio(Grupo_contacto grupoContacto) throws PersistentException {
 		// TODO - implement Grupo_contacto.busquedaAvanzadaGrupoContactoCapaNegocio
-		throw new UnsupportedOperationException();
+		List<Grupo_contacto> listaGrupo = new ArrayList<Grupo_contacto>();
+        List<orm.Grupo_contacto> listaGrupos = new ArrayList<orm.Grupo_contacto>();
+        String query = "";
+        if (grupoContacto.getNombre_grupo() != null && !grupoContacto.getNombre_grupo().equals("")){
+                query += "Grupo_Contacto.nombre_Grupo='" + grupoContacto.getNombre_grupo()+ "' ";
+        }
+        if ((grupoContacto.getNombre_grupo()!= null && !grupoContacto.getNombre_grupo().trim().equals("")) && (grupoContacto.getDescripcion_grupo()!= null && !grupoContacto.getDescripcion_grupo().trim().equals(""))){
+                query += "and ";
+        }
+        if (grupoContacto.getDescripcion_grupo()!= null && !grupoContacto.getDescripcion_grupo().trim().equals("")){
+                query += "Grupo_Contacto.descripcion_Grupo='" + grupoContacto.getDescripcion_grupo()+ "' ";
+        }
+        listaGrupos = orm.Grupo_contactoDAO.queryGrupo_contacto(query, null);
+        if (listaGrupos != null){
+            for (orm.Grupo_contacto grupoOrm : listaGrupos){
+                Grupo_contacto grupoNegocio = new Grupo_contacto();
+                grupoNegocio.setUid_grupo(grupoOrm.getUid_grupo());
+                grupoNegocio.setNombre_grupo(grupoOrm.getNombre_grupo());
+                grupoNegocio.setDescripcion_grupo(grupoOrm.getDescripcion_grupo());
+                grupoNegocio.setFecha_grupo(grupoOrm.getFecha_grupo());
+                listaGrupo.add(grupoNegocio);
+            }
+        }
+        return listaGrupo;
 	}
+	
 
-	public List<Grupo_contacto> busquedaMiembros(Grupo_contacto grupoContacto) {
-		// TODO - implement Grupo_contacto.busquedaMiembros
-		throw new UnsupportedOperationException();
-	}
+	   public List<Contacto> busquedaMiembrosCapaNegocio(Grupo_contacto grupo) throws PersistentException {
+        //Membresia[] listaMS = contactoOrm.Membresia.toArray();
+        List<Contacto> listaContacto = new ArrayList<Contacto>();
+        List<orm.Membresia> listaMembs = new ArrayList<orm.Membresia>();
+        int idGrupo = grupo.getUid_grupo();
+        listaMembs = orm.MembresiaDAO.queryMembresia("Membresia.idGrupoContacto='" + idGrupo + "' ", null);
+        Contacto contactoBusq = new Contacto();
+        for (orm.Membresia membOrm : listaMembs){
+            listaContacto.add(contactoBusq.busquedaIdContactoCapaNegocio("" + membOrm.getIdContacto().getUid_cont()).get(0));            
+        }
+        return listaContacto;
+    }
         
         public int agregarContactoAGrupo(Contacto contacto, Grupo_contacto grupo) throws PersistentException {
         int respuesta = 0;
@@ -164,5 +194,33 @@ public class Grupo_contacto {
         }
         return respuesta;
     }
+    
+    public List<Actividad> buscarActividadesGrupoContactoCapaNegocio (Grupo_contacto grupo) throws PersistentException{
+        List<Actividad> listaActividad = new ArrayList<Actividad>();
+        List<orm.Actividad> listaActividads = new ArrayList<orm.Actividad>();
+        listaActividads = orm.ActividadDAO.queryActividad("Actividad.idGrupo='" + grupo.getUid_grupo() + "' ", null);
+        
+        List<Contacto> listaContacto = new ArrayList<Contacto>();
+        listaContacto = grupo.busquedaMiembrosCapaNegocio(grupo);
+        System.out.println(listaContacto.get(0).getNombre_cont() + "|" + listaContacto.get(0).getApellido_cont());
+        System.out.println("Debug 1");
+        
+        for (orm.Actividad actividadOrm : listaActividads){
+            Actividad actividadNegocio = new Actividad();
+            actividadNegocio.setUid_act(actividadOrm.getUid_act());
+            actividadNegocio.setNombre_act(actividadOrm.getNombre_act());
+            actividadNegocio.setDescripcion_act(actividadOrm.getDescripcion_act());
+            actividadNegocio.setFecha_act(actividadOrm.getFecha_act());
+            actividadNegocio.setUid_grupo(actividadOrm.getIdGrupo().getUid_grupo());
+            listaActividad.add(actividadNegocio);
+            
+            /**for (int i = 0; i < listaContacto.size(); i++){
+                grupo.leerActividadCapaNegocio(listaContacto.get(i), actividadNegocio);
+            }*/
+        }
+        
+        return listaActividad;
+    }    
+        
 
 }

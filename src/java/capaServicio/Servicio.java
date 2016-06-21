@@ -18,9 +18,11 @@ import capaNegocio.Actividad;
 import capaNegocio.Notificacion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 //import orm.Notificacion;
 //import orm.Actividad;
 
@@ -127,11 +129,13 @@ public class Servicio {
             @WebParam(name = "descripcionGrupo") String descripcionGrupo) throws PersistentException{
         //TODO write your implementation code here:
         String respuesta = "no se pudo almacenar el Grupo";
-        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Date fecha = new Date();
+        String fechaCadena = sdf.format(fecha);
         Grupo_contacto grupoContacto = new Grupo_contacto();
         grupoContacto.setNombre_grupo(nombreGrupo);
         grupoContacto.setDescripcion_grupo(descripcionGrupo);
-        grupoContacto.setFecha_grupo();
+        grupoContacto.setFecha_grupo(fechaCadena);
         //HAY QUE CAMBIAR EL PARAMETRO QUE SE LE PASA AL SETFECHA_GRUPO POR LA FECHA XD
         
         try {
@@ -320,12 +324,16 @@ public class Servicio {
         //TODO write your implementation code here:
         String respuesta = "no se pudo crear la actividad";
         
+        
         Actividad actividad = new Actividad();
         Grupo_contacto grupo_contacto = new Grupo_contacto();
         grupo_contacto.setUid_grupo(uid_grupo);
         actividad.setNombre_act(nombreActividad);
         actividad.setDescripcion_act(descripcionActividad);
-        actividad.setFecha_act();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Date fecha = new Date();
+        String fechaCadena = sdf.format(fecha);
+        actividad.setFecha_act(fechaCadena);
         
         try {
             int resultado = actividad.agregarActividadCapaNegocio(actividad, grupo_contacto);
@@ -336,6 +344,21 @@ public class Servicio {
             //Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
         }
         return respuesta;  
+    }
+    
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "buscarActividadesServicioWeb")
+    public String buscarActividadesServicioWeb(@WebParam(name = "uid_Grupo") int uid_Grupo) throws PersistentException {
+        String respuesta = "No se encontraron actividades del grupo";
+        Grupo_contacto grupo = new Grupo_contacto();
+        grupo.setUid_grupo(uid_Grupo);
+        List<Actividad> lista = new ArrayList<Actividad>();
+        lista = grupo.buscarActividadesGrupoContactoCapaNegocio(grupo);
+        Gson gson = new GsonBuilder().create();
+        respuesta = gson.toJson(lista);
+        return respuesta;
     }
     
     @WebMethod(operationName = "agregarNotificacionServicioWeb")
@@ -360,4 +383,5 @@ public class Servicio {
         }
         return respuesta;  
     }
+    
 }
