@@ -41,7 +41,5 @@ public class Membresia {
 	public void setUid_grupo(int uid_grupo) {
 		this.uid_grupo = uid_grupo;
 	}
-        
 
 }
-

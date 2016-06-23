@@ -1,10 +1,12 @@
 package capaNegocio;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.orm.PersistentException;
 import org.orm.PersistentTransaction;
 import orm.Membresia;
+import capaNegocio.Grupo_contacto;
 
 public class Contacto {
 
@@ -61,9 +63,8 @@ public class Contacto {
 		return this.imagen_cont;
 	}
 
-	public void setImagen(String imagen_cont) {
-		// TODO - implement Contacto.setImagen
-		throw new UnsupportedOperationException();
+	public void setImagen_cont(String imagen_cont) {
+		this.imagen_cont = imagen_cont;
 	}
 
 	public String getCiudad_cont() {
@@ -266,49 +267,66 @@ public class Contacto {
             }
             return listaContacto;
 	}
-
-	/*public List<Grupo_contacto> busquedaGrupoContacto(Contacto contacto) {
-		// TODO - implement Contacto.busquedaGrupoContacto
-		throw new UnsupportedOperationException();
-	}*/
         
-        public Membresia [] busquedaGrupoContacto(Contacto contacto) {
-		// TODO - implement Contacto.busquedaGrupoContacto
-            List<orm.Contacto> listaContacto = new ArrayList<orm.Contacto>();
-            Membresia[] listaMC = new Membresia[uid_cont];
-            if (listaMC != null){
-               
-                for (orm.Contacto contactoOrm : listaContacto){
-                    contactoOrm.membresia.toArray();
+        public List<Contacto> busquedaIdContactoCapaNegocio(String busqueda) throws PersistentException {
+            List<Contacto> listaContacto = new ArrayList<Contacto>();
+            List<orm.Contacto> listaContactos = new ArrayList<orm.Contacto>();
+            if (busqueda != null || !busqueda.equals("")){
+                listaContactos = orm.ContactoDAO.queryContacto("Contacto.uid_cont='" + busqueda + "' ", null);
+            }
+            if (listaContactos != null){
+                for (orm.Contacto contactoOrm : listaContactos){
+                    Contacto contactoNegocio = new Contacto();
+                    contactoNegocio.setNombre_cont(contactoOrm.getNombre_cont());
+                    contactoNegocio.setApellido_cont(contactoOrm.getApellido_cont());
+                    contactoNegocio.setTelefono_cont(contactoOrm.getTelefono_cont());
+                    contactoNegocio.setMail_cont(contactoOrm.getMail_cont());
+                    contactoNegocio.setCiudad_cont(contactoOrm.getCiudad_cont());
+                    contactoNegocio.setOrganizacion_cont(contactoOrm.getOrganizacion_cont());
+                    listaContacto.add(contactoNegocio);
                 }
             }
-            return listaMC;
+            return listaContacto;
+        }
+
+        public List<Membresia> busquedaMembresiaContacto(Contacto contacto) throws PersistentException {
+            
+            List<Membresia> listaMembresia = new ArrayList<Membresia>();
+            List<orm.Contacto> listaContactos = new ArrayList<orm.Contacto>();
+             
+            listaContactos=orm.ContactoDAO.queryContacto("Contacto.uid_cont='" + contacto.getUid_cont()+"' ", null);
+            Membresia [] listaMC = new Membresia[listaContactos.size()];
+            if (listaContactos!=null) {
+                for (orm.Contacto contactoOrm : listaContactos) {
+                 listaMC = contactoOrm.membresia.toArray();
+                }
+            }
+            listaMembresia = Arrays.asList(listaMC);
+            return listaMembresia;
 	}
         
-         /**
-     * 
-     * @param textoBusqueda
-     */
-    public List<Contacto> busquedaIdContactoCapaNegocio(String busqueda) throws PersistentException {
-        List<Contacto> listaContacto = new ArrayList<Contacto>();
-        List<orm.Contacto> listaContactos = new ArrayList<orm.Contacto>();
-        if (busqueda != null || !busqueda.equals("")){
-            listaContactos = orm.ContactoDAO.queryContacto("Contacto.uid_Cont='" + busqueda + "' ", null);
-        }
-        if (listaContactos != null){
-            for (orm.Contacto contactoOrm : listaContactos){
-                Contacto contactoNegocio = new Contacto();
-                contactoNegocio.setNombre_cont(contactoOrm.getNombre_cont());
-                contactoNegocio.setApellido_cont(contactoOrm.getApellido_cont());
-                contactoNegocio.setTelefono_cont(contactoOrm.getTelefono_cont());
-                contactoNegocio.setMail_cont(contactoOrm.getMail_cont());
-                contactoNegocio.setCiudad_cont(contactoOrm.getCiudad_cont());
-                contactoNegocio.setOrganizacion_cont(contactoOrm.getOrganizacion_cont());
-                listaContacto.add(contactoNegocio);
+        //ESTE METODO NO VA
+        public List<Grupo_contacto> busquedaGruposContacto (List <Membresia> busquedaMembresia) throws PersistentException{
+            List<Grupo_contacto> listaGrupo = new ArrayList<Grupo_contacto>();
+            for (int i = 0; i < busquedaMembresia.size(); i++) {
+                Grupo_contacto grupo = new Grupo_contacto();
+                grupo.setNombre_grupo(busquedaMembresia.get(i).getIdGrupoContacto().getNombre_grupo());
+                grupo.setDescripcion_grupo(busquedaMembresia.get(i).getIdGrupoContacto().getDescripcion_grupo());
+                grupo.setUid_grupo(busquedaMembresia.get(i).getIdGrupoContacto().getUid_grupo());
+                listaGrupo.add(grupo);
             }
-        }
-        //System.out.println("hola " + listaContacto);
-        return listaContacto;
-    }
+            return  listaGrupo;
+        } 
 
+        public List<Grupo_contacto> busquedaGrupoContactoCapaNegocio(Contacto contacto) throws PersistentException {
+            List<Grupo_contacto> listaGrupo = new ArrayList<Grupo_contacto>();
+            List<orm.Membresia> listaMembs = new ArrayList<orm.Membresia>();
+            int idContacto = contacto.getUid_cont();
+            listaMembs = orm.MembresiaDAO.queryMembresia("Membresia.idContacto='" + idContacto + "' ", null);
+            Grupo_contacto grupoBusq = new Grupo_contacto();
+            for (orm.Membresia membOrm : listaMembs){
+                listaGrupo.add(grupoBusq.busquedaIdGrupoContactoCapaNegocio("" + membOrm.getIdGrupoContacto().getUid_grupo()).get(0));
+            }
+            return listaGrupo;
+        }
 }
