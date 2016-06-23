@@ -42,11 +42,8 @@ public class Grupo_contacto {
 		return this.fecha_grupo;
 	}
 
-	public void setFecha_grupo() {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            Date fecha = new Date();
-            String fechaCadena = sdf.format(fecha);
-		this.fecha_grupo = fechaCadena;
+	public void setFecha_grupo(String fecha_grupo) {
+		this.fecha_grupo = fecha_grupo;
 	}
 
 	public int agregarGrupoCapaNegocio(Grupo_contacto grupoContacto) throws PersistentException{
@@ -126,7 +123,7 @@ public class Grupo_contacto {
                         grupoContactoNegocio.setUid_grupo(grupoContactoOrm.getUid_grupo());
                         grupoContactoNegocio.setNombre_grupo(grupoContactoOrm.getNombre_grupo());
                         grupoContactoNegocio.setDescripcion_grupo(grupoContactoOrm.getDescripcion_grupo());
-                        grupoContactoNegocio.setFecha_grupo();
+                        grupoContactoNegocio.setFecha_grupo(grupoContactoOrm.getFecha_grupo());
                         listaGrupoContacto.add(grupoContactoNegocio);
                     }
                 }
@@ -155,25 +152,31 @@ public class Grupo_contacto {
                     grupoNegocio.setUid_grupo(grupoContactoOrm.getUid_grupo());
                     grupoNegocio.setNombre_grupo(grupoContactoOrm.getNombre_grupo());
                     grupoNegocio.setDescripcion_grupo(grupoContactoOrm.getDescripcion_grupo());
-                    grupoNegocio.setFecha_grupo();
+                    grupoNegocio.setFecha_grupo(grupoContactoOrm.getFecha_grupo());
                     listaGrupo.add(grupoNegocio);
                 }
             }
             return listaGrupo;
 	}
 
-	public List<Grupo_contacto> busquedaMiembros(Grupo_contacto grupoContacto) {
+	public List<Contacto> busquedaMiembros(Grupo_contacto grupoContacto) throws PersistentException{
 		// TODO - implement Grupo_contacto.busquedaMiembros
-		throw new UnsupportedOperationException();
+            List<Contacto> listaContacto = new ArrayList<Contacto>();
+            List<orm.Membresia> listaMembs = new ArrayList<orm.Membresia>();
+            int idGrupo = grupoContacto.getUid_grupo();
+            listaMembs = orm.MembresiaDAO.queryMembresia("Membresia.idGrupoContacto='" + idGrupo + "' ", null);
+            Contacto contactoBusq = new Contacto();
+            for (orm.Membresia membOrm : listaMembs){
+                listaContacto.add(contactoBusq.busquedaIdContactoCapaNegocio("" + membOrm.getIdContacto().getUid_cont()).get(0));            
+            }
+            return listaContacto;
 	}
-        
+
         public int agregarContactoAGrupo(Contacto contacto, Grupo_contacto grupo) throws PersistentException {
         int respuesta = 0;
         PersistentTransaction t = orm.PruebaFinalPersistentManager.instance().getSession().beginTransaction();
         try {
-            
             orm.Membresia membresiaOrm = new orm.Membresia();
-         
             orm.Contacto contactoOrm = orm.ContactoDAO.loadContactoByORMID(contacto.getUid_cont());
             orm.Grupo_contacto grupoOrm = orm.Grupo_contactoDAO.loadGrupo_contactoByORMID(grupo.getUid_grupo());
             
@@ -189,4 +192,22 @@ public class Grupo_contacto {
         return respuesta;
     }
 
+    public List<Grupo_contacto> busquedaIdGrupoContactoCapaNegocio(String textoBusqueda) throws PersistentException {
+        List<Grupo_contacto> listaGrupo = new ArrayList<Grupo_contacto>();
+        List<orm.Grupo_contacto> listaGrupos = new ArrayList<orm.Grupo_contacto>();
+        if (textoBusqueda != null || !textoBusqueda.equals("")){
+            listaGrupos = orm.Grupo_contactoDAO.queryGrupo_contacto("Grupo_contacto.uid_grupo='" + textoBusqueda + "' ", null);
+        }
+        if (listaGrupos != null){
+            for (orm.Grupo_contacto grupoOrm : listaGrupos){
+                    Grupo_contacto grupoNegocio = new Grupo_contacto();
+                    grupoNegocio.setNombre_grupo(grupoOrm.getNombre_grupo());
+                    grupoNegocio.setDescripcion_grupo(grupoOrm.getDescripcion_grupo());
+                    grupoNegocio.setFecha_grupo(grupoOrm.getFecha_grupo());
+                    listaGrupo.add(grupoNegocio);
+            }
+        }
+        return listaGrupo;
+    }   
+        
 }

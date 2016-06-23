@@ -15,12 +15,15 @@ import org.orm.PersistentException;
 import capaNegocio.Contacto;
 import capaNegocio.Grupo_contacto;
 import capaNegocio.Actividad;
+import capaNegocio.Actividad_leida;
 import capaNegocio.Notificacion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 //import orm.Notificacion;
 //import orm.Actividad;
 
@@ -128,16 +131,17 @@ public class Servicio {
         //TODO write your implementation code here:
         String respuesta = "no se pudo almacenar el Grupo";
         
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Date fecha = new Date();
+        String fechaCadena = sdf.format(fecha);
+        
         Grupo_contacto grupoContacto = new Grupo_contacto();
         grupoContacto.setNombre_grupo(nombreGrupo);
         grupoContacto.setDescripcion_grupo(descripcionGrupo);
-        grupoContacto.setFecha_grupo();
-        //HAY QUE CAMBIAR EL PARAMETRO QUE SE LE PASA AL SETFECHA_GRUPO POR LA FECHA XD
+        grupoContacto.setFecha_grupo(fechaCadena);
         
         try {
-            //respuesta = "error1";
             int resultado = grupoContacto.agregarGrupoCapaNegocio(grupoContacto);
-            //respuesta = "error2";
             if (resultado != 0){
                 respuesta = "creación del Grupo exitoso, su uid es: " + resultado;
             }
@@ -284,11 +288,11 @@ public class Servicio {
         List<Grupo_contacto> lista = new ArrayList<Grupo_contacto>();
         Gson gson = new GsonBuilder().create();
         try{
-                Grupo_contacto grupo = new Grupo_contacto();
-                lista = grupo.busquedaSimpleGrupoContactoCapaNegocio(textoBusqueda);
-                listaResultado = gson.toJson(lista);
+            Grupo_contacto grupo = new Grupo_contacto();
+            lista = grupo.busquedaSimpleGrupoContactoCapaNegocio(textoBusqueda);
+            listaResultado = gson.toJson(lista);
         }catch (PersistentException ex){
-                java.util.logging.Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listaResultado;
     }
@@ -303,14 +307,14 @@ public class Servicio {
         List<capaNegocio.Grupo_contacto> lista = new ArrayList<capaNegocio.Grupo_contacto>();
         capaNegocio.Grupo_contacto grupo = new capaNegocio.Grupo_contacto();
         if (nombreGrupo != null){
-                grupo.setNombre_grupo(nombreGrupo);
+            grupo.setNombre_grupo(nombreGrupo);
         }else{
-                grupo.setNombre_grupo("");
+            grupo.setNombre_grupo("");
         }
         if (descripcionGrupo != null){
-                grupo.setDescripcion_grupo(descripcionGrupo);
+            grupo.setDescripcion_grupo(descripcionGrupo);
         }else{
-                grupo.setDescripcion_grupo("");
+            grupo.setDescripcion_grupo("");
         }
         
         Gson gson = new GsonBuilder().create();
@@ -327,7 +331,8 @@ public class Servicio {
      * Web service operation
      */
     @WebMethod(operationName = "agregarContactoAGrupoServicioWeb")
-    public String agregarContactoAGrupoServicioWeb(@WebParam(name = "uid_cont") String uid_cont, @WebParam(name = "uid_grupo") String uid_grupo) throws PersistentException {
+    public String agregarContactoAGrupoServicioWeb(@WebParam(name = "uid_cont") String uid_cont, 
+            @WebParam(name = "uid_grupo") String uid_grupo) throws PersistentException {
         String respuesta = "No se pudo asociar el contacto al grupo";
         capaNegocio.Contacto contacto = new Contacto();
         capaNegocio.Grupo_contacto grupo = new Grupo_contacto();
@@ -339,7 +344,7 @@ public class Servicio {
         }
         return respuesta;
     }
-    
+ 
     /**
      * Web service operation
      */
@@ -355,7 +360,12 @@ public class Servicio {
         grupo_contacto.setUid_grupo(uid_grupo);
         actividad.setNombre_act(nombreActividad);
         actividad.setDescripcion_act(descripcionActividad);
-        actividad.setFecha_act();
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Date fecha = new Date();
+        String fechaCadena = sdf.format(fecha);
+        
+        actividad.setFecha_act(fechaCadena);
         
         try {
             int resultado = actividad.agregarActividadCapaNegocio(actividad, grupo_contacto);
@@ -376,7 +386,12 @@ public class Servicio {
         
         Notificacion notificacion = new Notificacion();
         notificacion.setMensaje_noti(mensajeNotificacion);
-        notificacion.setFecha_noti();
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Date fecha = new Date();
+        String fechaCadena = sdf.format(fecha);
+        
+        notificacion.setFecha_noti(fechaCadena);
         Grupo_contacto grupo_contacto = new Grupo_contacto();
         grupo_contacto.setUid_grupo(uid_grupo);
         
@@ -389,5 +404,29 @@ public class Servicio {
             //Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
         }
         return respuesta;  
+    }
+  
+    @WebMethod(operationName = "gruposDeContactoServicioWeb")
+    public String gruposDeContactoServicioWeb(@WebParam(name = "uid_cont") int uid_Cont) throws PersistentException {
+        String respuesta = "No se encontraron grupos del contacto";
+        Contacto contacto = new Contacto();
+        contacto.setUid_cont(uid_Cont);
+        List<Grupo_contacto> lista = new ArrayList<Grupo_contacto>();
+        lista = contacto.busquedaGrupoContactoCapaNegocio(contacto);
+        Gson gson = new GsonBuilder().create();
+        respuesta = gson.toJson(lista);
+        return respuesta;
+    }
+    
+    @WebMethod(operationName = "miembrosDeGrupoServicioWeb")
+    public String miembrosDeGrupoServicioWeb(@WebParam(name = "uid_grupo") int uid_grupo) throws PersistentException {
+        String respuesta = "No se encontraron miembros del grupo";
+        Grupo_contacto grupo = new Grupo_contacto();
+        grupo.setUid_grupo(uid_grupo);
+        List<Contacto> lista = new ArrayList<Contacto>();
+        lista = grupo.busquedaMiembros(grupo);
+        Gson gson = new GsonBuilder().create();
+        respuesta = gson.toJson(lista);
+        return respuesta;
     }
 }
