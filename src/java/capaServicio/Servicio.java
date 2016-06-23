@@ -266,16 +266,13 @@ public class Servicio {
         }else{
             contacto.setOrganizacion_cont("");
         }
-        
         Gson gson = new GsonBuilder().create();
-        
         try {
             lista = contacto.busquedaAvanzadaContactoCapaNegocio(contacto);
             listaResultado = gson.toJson(lista);
         } catch (PersistentException ex){
             listaResultado=null;
         }
-        
         return listaResultado;
     }
     

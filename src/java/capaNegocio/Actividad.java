@@ -85,15 +85,13 @@ public class Actividad {
             List<orm.Actividad> listaActividades = new ArrayList<orm.Actividad>();
             List<orm.Actividad_leida> listas = new ArrayList<orm.Actividad_leida>(); 
 
-            listaActividades=orm.ActividadDAO.queryActividad("Actividad.uid='" + actividad.getUid_act()+ "' ", null);
+            listaActividades=orm.ActividadDAO.queryActividad("Actividad.uid_act='" + actividad.getUid_act()+ "' ", null);
             orm.Actividad_leida [] listaMC = new orm.Actividad_leida[listaActividades.size()];
             if (listaActividades != null) {
                 for (orm.Actividad actividadesOrm  : listaActividades) {
 
                     listaMC = actividadesOrm.actividad_leida.toArray();
-
                 }
-
             }
             listaActividadesleidas = Arrays.asList(listaMC);
             for(int i=0; i<listaActividadesleidas.size(); i++){
@@ -101,7 +99,6 @@ public class Actividad {
                   listas.add(listaActividadesleidas.get(i));
                 }
             }
-  
             return listas;    
 	}
         
@@ -143,9 +140,7 @@ public class Actividad {
                 actividadNegocio.setFecha_act(actividadOrm.getFecha_act());
                 actividadNegocio.setUid_grupo(actividadOrm.getIdGrupo().getUid_grupo());
                 listaActividad.add(actividadNegocio);
-
             }
-
             return listaActividad;
         }
 }
