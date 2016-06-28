@@ -20,33 +20,30 @@ import org.orm.criteria.*;
 
 public class Actividad_leidaDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression uid_leact;
-	public final IntegerExpression nombre_leact;
 	public final IntegerExpression idContactoId;
 	public final AssociationExpression idContacto;
 	public final IntegerExpression idActividadId;
 	public final AssociationExpression idActividad;
-	public final StringExpression visto_leact;
+	public final StringExpression fecha_leact;
 	
 	public Actividad_leidaDetachedCriteria() {
 		super(orm.Actividad_leida.class, orm.Actividad_leidaCriteria.class);
 		uid_leact = new IntegerExpression("uid_leact", this.getDetachedCriteria());
-		nombre_leact = new IntegerExpression("nombre_leact", this.getDetachedCriteria());
 		idContactoId = new IntegerExpression("idContacto.uid_cont", this.getDetachedCriteria());
 		idContacto = new AssociationExpression("idContacto", this.getDetachedCriteria());
 		idActividadId = new IntegerExpression("idActividad.uid_act", this.getDetachedCriteria());
 		idActividad = new AssociationExpression("idActividad", this.getDetachedCriteria());
-		visto_leact = new StringExpression("visto_leact", this.getDetachedCriteria());
+		fecha_leact = new StringExpression("fecha_leact", this.getDetachedCriteria());
 	}
 	
 	public Actividad_leidaDetachedCriteria(DetachedCriteria aDetachedCriteria) {
 		super(aDetachedCriteria, orm.Actividad_leidaCriteria.class);
 		uid_leact = new IntegerExpression("uid_leact", this.getDetachedCriteria());
-		nombre_leact = new IntegerExpression("nombre_leact", this.getDetachedCriteria());
 		idContactoId = new IntegerExpression("idContacto.uid_cont", this.getDetachedCriteria());
 		idContacto = new AssociationExpression("idContacto", this.getDetachedCriteria());
 		idActividadId = new IntegerExpression("idActividad.uid_act", this.getDetachedCriteria());
 		idActividad = new AssociationExpression("idActividad", this.getDetachedCriteria());
-		visto_leact = new StringExpression("visto_leact", this.getDetachedCriteria());
+		fecha_leact = new StringExpression("fecha_leact", this.getDetachedCriteria());
 	}
 	
 	public ContactoDetachedCriteria createIdContactoCriteria() {

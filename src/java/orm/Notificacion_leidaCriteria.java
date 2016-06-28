@@ -20,22 +20,20 @@ import org.orm.criteria.*;
 
 public class Notificacion_leidaCriteria extends AbstractORMCriteria {
 	public final IntegerExpression uid_lenot;
-	public final IntegerExpression lectura_lenot;
 	public final IntegerExpression idContactoId;
 	public final AssociationExpression idContacto;
 	public final IntegerExpression idNotificacionId;
 	public final AssociationExpression idNotificacion;
-	public final StringExpression visto_lenot;
+	public final StringExpression fecha_lenot;
 	
 	public Notificacion_leidaCriteria(Criteria criteria) {
 		super(criteria);
 		uid_lenot = new IntegerExpression("uid_lenot", this);
-		lectura_lenot = new IntegerExpression("lectura_lenot", this);
 		idContactoId = new IntegerExpression("idContacto.uid_cont", this);
 		idContacto = new AssociationExpression("idContacto", this);
 		idNotificacionId = new IntegerExpression("idNotificacion.uid_noti", this);
 		idNotificacion = new AssociationExpression("idNotificacion", this);
-		visto_lenot = new StringExpression("visto_lenot", this);
+		fecha_lenot = new StringExpression("fecha_lenot", this);
 	}
 	
 	public Notificacion_leidaCriteria(PersistentSession session) {

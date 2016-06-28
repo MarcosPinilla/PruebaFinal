@@ -25,10 +25,10 @@ public class CreatePruebaFinalData {
 			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : notificacion_leida, idGrupo
 			orm.NotificacionDAO.save(lormNotificacion);
 			orm.Actividad_leida lormActividad_leida = orm.Actividad_leidaDAO.createActividad_leida();
-			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : visto_leact, idActividad, idContacto, nombre_leact
+			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : fecha_leact, idActividad, idContacto
 			orm.Actividad_leidaDAO.save(lormActividad_leida);
 			orm.Notificacion_leida lormNotificacion_leida = orm.Notificacion_leidaDAO.createNotificacion_leida();
-			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : visto_lenot, idNotificacion, idContacto, lectura_lenot
+			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : fecha_lenot, idNotificacion, idContacto
 			orm.Notificacion_leidaDAO.save(lormNotificacion_leida);
 			t.commit();
 		}

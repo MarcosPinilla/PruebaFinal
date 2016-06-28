@@ -36,13 +36,11 @@ public class Actividad_leida {
 	
 	private int uid_leact;
 	
-	private int nombre_leact;
-	
 	private orm.Contacto idContacto;
 	
 	private orm.Actividad idActividad;
 	
-	private String visto_leact;
+	private String fecha_leact;
 	
 	/**
 	 * Uid de la actividad leida
@@ -62,26 +60,12 @@ public class Actividad_leida {
 		return getUid_leact();
 	}
 	
-	/**
-	 * Registra si fue leido (1) o no (0)
-	 */
-	public void setNombre_leact(int value) {
-		this.nombre_leact = value;
+	public void setFecha_leact(String value) {
+		this.fecha_leact = value;
 	}
 	
-	/**
-	 * Registra si fue leido (1) o no (0)
-	 */
-	public int getNombre_leact() {
-		return nombre_leact;
-	}
-	
-	public void setVisto_leact(String value) {
-		this.visto_leact = value;
-	}
-	
-	public String getVisto_leact() {
-		return visto_leact;
+	public String getFecha_leact() {
+		return fecha_leact;
 	}
 	
 	public void setIdActividad(orm.Actividad value) {

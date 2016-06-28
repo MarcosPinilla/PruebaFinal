@@ -10,15 +10,10 @@ License Type: Academic
 			<generator class="increment">
 			</generator>
 		</id>
-		<property name="lectura_lenot" column="lectura_lenot" type="integer" length="10" not-null="true" lazy="false">
-			<meta attribute="field-description">
-				Registra si fue leido(1) o no(0)
-			</meta>
-		</property>
 		<many-to-one name="idContacto" cascade="lock" column="idContacto" class="orm.Contacto" not-null="true" lazy="no-proxy" access="field">
 		</many-to-one>
 		<many-to-one name="idNotificacion" cascade="lock" column="idNotificacion" class="orm.Notificacion" not-null="true" lazy="no-proxy" access="field">
 		</many-to-one>
-		<property name="visto_lenot" column="visto_lenot" type="string" length="255" not-null="true" lazy="false"/>
+		<property name="fecha_lenot" column="fecha_lenot" type="string" length="255" not-null="true" lazy="false"/>
 	</class>
 </hibernate-mapping>

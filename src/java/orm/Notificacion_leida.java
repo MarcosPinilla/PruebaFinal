@@ -36,13 +36,11 @@ public class Notificacion_leida {
 	
 	private int uid_lenot;
 	
-	private int lectura_lenot;
-	
 	private orm.Contacto idContacto;
 	
 	private orm.Notificacion idNotificacion;
 	
-	private String visto_lenot;
+	private String fecha_lenot;
 	
 	/**
 	 * Uid  de la notificaion leida
@@ -62,26 +60,12 @@ public class Notificacion_leida {
 		return getUid_lenot();
 	}
 	
-	/**
-	 * Registra si fue leido(1) o no(0)
-	 */
-	public void setLectura_lenot(int value) {
-		this.lectura_lenot = value;
+	public void setFecha_lenot(String value) {
+		this.fecha_lenot = value;
 	}
 	
-	/**
-	 * Registra si fue leido(1) o no(0)
-	 */
-	public int getLectura_lenot() {
-		return lectura_lenot;
-	}
-	
-	public void setVisto_lenot(String value) {
-		this.visto_lenot = value;
-	}
-	
-	public String getVisto_lenot() {
-		return visto_lenot;
+	public String getFecha_lenot() {
+		return fecha_lenot;
 	}
 	
 	public void setIdNotificacion(orm.Notificacion value) {

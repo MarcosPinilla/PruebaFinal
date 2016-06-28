@@ -17,6 +17,7 @@ import capaNegocio.Grupo_contacto;
 import capaNegocio.Actividad;
 import capaNegocio.Actividad_leida;
 import capaNegocio.Notificacion;
+import capaNegocio.Notificacion_leida;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.text.SimpleDateFormat;
@@ -24,8 +25,6 @@ import java.util.logging.Level;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
-//import orm.Notificacion;
-//import orm.Actividad;
 
 /**
  *
@@ -33,7 +32,7 @@ import java.util.Date;
  */
 @WebService(serviceName = "Servicio")
 public class Servicio {
-    
+
     /**
      * Web service operation
      */
@@ -43,7 +42,9 @@ public class Servicio {
             @WebParam(name = "telefonoContacto") String telefonoContacto, 
             @WebParam(name = "mailContacto") String mailContacto, 
             @WebParam(name = "organizacionContacto") String organizacionContacto, 
-            @WebParam(name = "ciudadContacto") String ciudadContacto) throws PersistentException {
+            @WebParam(name = "ciudadContacto") String ciudadContacto
+            //,@WebParam(name = "imagenContacto") String imagenContacto
+            ) throws PersistentException {
         //TODO write your implementation code here:
         String respuesta = "no se pudo almacenar el contacto";
         
@@ -54,11 +55,43 @@ public class Servicio {
         contacto.setMail_cont(mailContacto);
         contacto.setOrganizacion_cont(organizacionContacto);
         contacto.setCiudad_cont(ciudadContacto);
+        //contacto.setImagen_cont(imagenContacto);
+        
+        /*if (nombreContacto != null && nombreContacto.matches("[a-zA-ZáéíóúñÑ]{2,20}")){
+            contacto.setNombre_cont(nombreContacto);
+        }else{
+            contacto.setNombre_cont("");
+        }
+        if (apellidoContacto != null && apellidoContacto.matches("[a-zA-ZáéíóúñÑ]{2,20}")){
+            contacto.setApellido_cont(apellidoContacto);
+        }else{
+            contacto.setApellido_cont("");
+        }
+        if (mailContacto != null && mailContacto.matches("\\w*(\\.\\w*){0,5}@{1,1}\\w*\\.{1,1}\\w{1,5}")){
+            contacto.setMail_cont(mailContacto);
+        }else{
+            contacto.setMail_cont("");
+        }
+        if (telefonoContacto != null && telefonoContacto.matches("\\d{6,10}")){
+            contacto.setTelefono_cont(telefonoContacto);
+        }else{
+            contacto.setTelefono_cont("");
+        }
+        if (ciudadContacto != null && ciudadContacto.matches("[a-zA-ZáéíóúñÑ]*")){
+            contacto.setCiudad_cont(ciudadContacto);
+        }else{
+            contacto.setCiudad_cont("");
+        }
+        if (organizacionContacto != null && organizacionContacto.matches("[a-zA-ZáéíóúñÑ]*")){
+            contacto.setOrganizacion_cont(organizacionContacto);
+        }else{
+            contacto.setOrganizacion_cont("");
+        }*/
         
         try {
             int resultado = contacto.agregarContactoCapaNegocio(contacto);
             if (resultado != 0){
-                respuesta = "creación del contacto exitoso, su uid es: " + resultado;
+                respuesta = "Creación del contacto exitoso, su uid es: " + resultado;
             }
         } catch (PersistenceException ex){
             //Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
@@ -89,10 +122,41 @@ public class Servicio {
         contacto.setOrganizacion_cont(nuevoOrganizacionContacto);
         contacto.setCiudad_cont(nuevoCiudadContacto);
         
+        /*if (nuevoNombreContacto != null && nuevoNombreContacto.matches("[a-zA-ZáéíóúñÑ]{2,20}")){
+            contacto.setNombre_cont(nuevoNombreContacto);
+        }else{
+            contacto.setNombre_cont("");
+        }
+        if (nuevoApellidoContacto != null && nuevoApellidoContacto.matches("[a-zA-ZáéíóúñÑ]{2,20}")){
+            contacto.setApellido_cont(nuevoApellidoContacto);
+        }else{
+            contacto.setApellido_cont("");
+        }
+        if (nuevoMailContacto != null && nuevoMailContacto.matches("\\w*(\\.\\w*){0,5}@{1,1}\\w*\\.{1,1}\\w{1,5}")){
+            contacto.setMail_cont(nuevoMailContacto);
+        }else{
+            contacto.setMail_cont("");
+        }
+        if (nuevoTelefonoContacto != null && nuevoTelefonoContacto.matches("\\d{6,10}")){
+            contacto.setTelefono_cont(nuevoTelefonoContacto);
+        }else{
+            contacto.setTelefono_cont("");
+        }
+        if (nuevoCiudadContacto!= null && nuevoCiudadContacto.matches("[a-zA-ZáéíóúñÑ]*")){
+            contacto.setCiudad_cont(nuevoCiudadContacto);
+        }else{
+            contacto.setCiudad_cont("");
+        }
+        if (nuevoOrganizacionContacto != null && nuevoOrganizacionContacto.matches("[a-zA-ZáéíóúñÑ]*")){
+            contacto.setOrganizacion_cont(nuevoOrganizacionContacto);
+        }else{
+            contacto.setOrganizacion_cont("");
+        }*/
+        
         try {
             int resultado = contacto.editarContactoCapaNegocio(contacto);
             if (resultado != 0){
-                respuesta = "se ha modificado el contacto cuyo uid es: " + resultado;
+                respuesta = "Se ha modificado el contacto, cuyo uid es: " + resultado;
             }
         } catch (PersistentException ex){
             //Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
@@ -140,6 +204,17 @@ public class Servicio {
         grupoContacto.setDescripcion_grupo(descripcionGrupo);
         grupoContacto.setFecha_grupo(fechaCadena);
         
+        /*if (nombreGrupo != null && nombreGrupo.matches("[a-zA-ZáéíóúñÑ]{2,20}")){
+            grupoContacto.setNombre_grupo(nombreGrupo);
+        }else{
+            grupoContacto.setNombre_grupo("");
+        }
+        if (descripcionGrupo != null && descripcionGrupo.matches("[a-zA-ZáéíóúñÑ]*")){
+            grupoContacto.setDescripcion_grupo(descripcionGrupo);
+        }else{
+            grupoContacto.setDescripcion_grupo("");
+        }*/
+        
         try {
             int resultado = grupoContacto.agregarGrupoCapaNegocio(grupoContacto);
             if (resultado != 0){
@@ -165,6 +240,17 @@ public class Servicio {
         grupoContacto.setUid_grupo(uidGrupo);
         grupoContacto.setNombre_grupo(nombreGrupo);
         grupoContacto.setDescripcion_grupo(descripcionGrupo);
+        
+        /*if (nombreGrupo != null && nombreGrupo.matches("[a-zA-ZáéíóúñÑ]{2,20}")){
+            grupoContacto.setNombre_grupo(nombreGrupo);
+        }else{
+            grupoContacto.setNombre_grupo("");
+        }
+        if (descripcionGrupo != null && descripcionGrupo.matches("[a-zA-ZáéíóúñÑ]*")){
+            grupoContacto.setDescripcion_grupo(descripcionGrupo);
+        }else{
+            grupoContacto.setDescripcion_grupo("");
+        }*/
         
         try {
             int resultado = grupoContacto.editarGrupoCapaNegocio(grupoContacto);
@@ -199,14 +285,13 @@ public class Servicio {
         return respuesta;
     }
 
-
     /**
      * Web service operation
      */
     @WebMethod(operationName = "busquedaSimpleContacto")
     public String busquedaSimpleContacto(@WebParam(name = "textoBusqueda") String textoBusqueda) {
         //TODO write your implementation code here:
-        String listaResultado = "";
+        String listaResultado = "La busqueda no devolvio ningún resultado";
         List<Contacto> lista = new ArrayList<Contacto>();
         Gson gson = new GsonBuilder().create();
         
@@ -233,40 +318,42 @@ public class Servicio {
             @WebParam(name = "ciudadContacto") String ciudadContacto, 
             @WebParam(name = "organizacionContacto") String organizacionContacto) {
         //TODO write your implementation code here:
-        String listaResultado = "";
+        String listaResultado = "La busqueda no devolvio ningún resultado";
         List<capaNegocio.Contacto> lista = new ArrayList<capaNegocio.Contacto>();
         capaNegocio.Contacto contacto = new capaNegocio.Contacto();
-        if (nombreContacto!=null){
+        if (nombreContacto!=null && nombreContacto.matches("[a-zA-ZáéíóúñÑ]{2,20}")){
             contacto.setNombre_cont(nombreContacto);
         }else{
             contacto.setNombre_cont("");
         }
-        if (apellidoContacto!=null){
+        if (apellidoContacto!=null && apellidoContacto.matches("[a-zA-ZáéíóúñÑ]{2,20}")){
             contacto.setApellido_cont(apellidoContacto);
         }else{
             contacto.setApellido_cont("");
         }
-        if (telefonoContacto!=null){
+        if (telefonoContacto!=null && telefonoContacto.matches("\\d{6,10}")){
             contacto.setTelefono_cont(telefonoContacto);
         }else{
             contacto.setTelefono_cont("");
         }
-        if (mailContacto!=null){
+        if (mailContacto!=null && mailContacto.matches("\\w*(\\.\\w*){0,5}@{1,1}\\w*\\.{1,1}\\w{1,5}")){
             contacto.setMail_cont(mailContacto);
         }else{
             contacto.setMail_cont("");
         }
-        if (ciudadContacto!=null){
+        if (ciudadContacto!=null && ciudadContacto.matches("[a-zA-ZáéíóúñÑ]*")){
             contacto.setCiudad_cont(ciudadContacto);
         }else{
             contacto.setCiudad_cont("");
         }
-        if (organizacionContacto!=null){
+        if (organizacionContacto!=null && organizacionContacto.matches("[a-zA-ZáéíóúñÑ]*")){
             contacto.setOrganizacion_cont(organizacionContacto);
         }else{
             contacto.setOrganizacion_cont("");
         }
+        
         Gson gson = new GsonBuilder().create();
+        
         try {
             lista = contacto.busquedaAvanzadaContactoCapaNegocio(contacto);
             listaResultado = gson.toJson(lista);
@@ -300,15 +387,15 @@ public class Servicio {
     @WebMethod(operationName = "busquedaAvanzadaGrupoContactoServicioWeb")
     public String busquedaAvanzadaGrupoContactoServicioWeb(@WebParam(name = "nombreGrupo") String nombreGrupo, 
             @WebParam(name = "descripcionGrupo") String descripcionGrupo) {
-        String listaResultado = "";
+        String listaResultado = "La búsqueda no devolvió resultados";
         List<capaNegocio.Grupo_contacto> lista = new ArrayList<capaNegocio.Grupo_contacto>();
         capaNegocio.Grupo_contacto grupo = new capaNegocio.Grupo_contacto();
-        if (nombreGrupo != null){
+        if (nombreGrupo != null && nombreGrupo.matches("[a-zA-ZáéíóúñÑ]{2,20}")){
             grupo.setNombre_grupo(nombreGrupo);
         }else{
             grupo.setNombre_grupo("");
         }
-        if (descripcionGrupo != null){
+        if (descripcionGrupo != null && descripcionGrupo.matches("[a-zA-ZáéíóúñÑ]*")){
             grupo.setDescripcion_grupo(descripcionGrupo);
         }else{
             grupo.setDescripcion_grupo("");
@@ -345,18 +432,60 @@ public class Servicio {
     /**
      * Web service operation
      */
+    @WebMethod(operationName = "gruposDeContactoServicioWeb")
+    public String gruposDeContactoServicioWeb(@WebParam(name = "uid_cont") int uid_Cont) throws PersistentException {
+        String respuesta = "No se encontraron grupos del contacto";
+        Contacto contacto = new Contacto();
+        contacto.setUid_cont(uid_Cont);
+        List<Grupo_contacto> lista = new ArrayList<Grupo_contacto>();
+        lista = contacto.busquedaGrupoContactoCapaNegocio(contacto);
+        Gson gson = new GsonBuilder().create();
+        respuesta = gson.toJson(lista);
+        return respuesta;
+    }
+    
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "miembrosDeGrupoServicioWeb")
+    public String miembrosDeGrupoServicioWeb(@WebParam(name = "uid_grupo") int uid_grupo) throws PersistentException {
+        String respuesta = "No se encontraron miembros del grupo";
+        Grupo_contacto grupo = new Grupo_contacto();
+        grupo.setUid_grupo(uid_grupo);
+        List<Contacto> lista = new ArrayList<Contacto>();
+        lista = grupo.busquedaMiembros(grupo);
+        Gson gson = new GsonBuilder().create();
+        respuesta = gson.toJson(lista);
+        return respuesta;
+    }
+    
+    /**
+     * Web service operation
+     */
     @WebMethod(operationName = "agregarActividadServicioWeb")
-    public String agregarActividadServicioWeb(@WebParam(name = "nombreActividad") String nombreActividad, 
-            @WebParam(name = "descripcionActividad") String descripcionActividad,
-            @WebParam(name = "uid_grupo") int uid_grupo) throws PersistentException {
+    public String agregarActividadServicioWeb(@WebParam(name = "uid_grupo") int uid_grupo, 
+            @WebParam(name = "nombreActividad") String nombreActividad,
+            @WebParam(name = "descripcionActividad") String descripcionActividad) throws PersistentException {
         //TODO write your implementation code here:
+        
         String respuesta = "no se pudo crear la actividad";
         
         Actividad actividad = new Actividad();
         Grupo_contacto grupo_contacto = new Grupo_contacto();
         grupo_contacto.setUid_grupo(uid_grupo);
-        actividad.setNombre_act(nombreActividad);
-        actividad.setDescripcion_act(descripcionActividad);
+        /*actividad.setNombre_act(nombreActividad);
+        actividad.setDescripcion_act(descripcionActividad);*/
+        
+        if (nombreActividad!=null && nombreActividad.matches("[a-zA-ZáéíóúñÑ]{2,20}")){
+            actividad.setNombre_act(nombreActividad);
+        }else{
+            actividad.setNombre_act("");
+        }
+        if (descripcionActividad!=null && descripcionActividad.matches("[a-zA-ZáéíóúñÑ]*")){
+            actividad.setDescripcion_act(descripcionActividad);
+        }else{
+            actividad.setDescripcion_act("");
+        }
         
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         Date fecha = new Date();
@@ -375,22 +504,32 @@ public class Servicio {
         return respuesta;  
     }
     
+    /**
+     * Web service operation
+     */
     @WebMethod(operationName = "agregarNotificacionServicioWeb")
-    public String agregarNotificacionServicioWeb(@WebParam(name = "mensajeNotificacion") String mensajeNotificacion,
-            @WebParam(name = "uid_grupo") int uid_grupo) throws PersistentException {
+    public String agregarNotificacionServicioWeb(@WebParam(name = "uid_grupo") int uid_grupo,
+            @WebParam(name = "mensajeNotificacion") String mensajeNotificacion) throws PersistentException {
         //TODO write your implementation code here:
-        String respuesta = "no se pudo crear la notificacion";
         
+        String respuesta = "no se pudo crear la notificacion";
+
+        Grupo_contacto grupo_contacto = new Grupo_contacto();
+        grupo_contacto.setUid_grupo(uid_grupo);
         Notificacion notificacion = new Notificacion();
         notificacion.setMensaje_noti(mensajeNotificacion);
+        
+        if (mensajeNotificacion!=null && mensajeNotificacion.matches("[a-zA-ZáéíóúñÑ]{2,20}")){
+            notificacion.setMensaje_noti(mensajeNotificacion);
+        }else{
+            notificacion.setMensaje_noti("");
+        }
         
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         Date fecha = new Date();
         String fechaCadena = sdf.format(fecha);
         
         notificacion.setFecha_noti(fechaCadena);
-        Grupo_contacto grupo_contacto = new Grupo_contacto();
-        grupo_contacto.setUid_grupo(uid_grupo);
         
         try {
             int resultado = notificacion.agregarNotificacionCapaNegocio(notificacion, grupo_contacto);
@@ -402,28 +541,157 @@ public class Servicio {
         }
         return respuesta;  
     }
-  
-    @WebMethod(operationName = "gruposDeContactoServicioWeb")
-    public String gruposDeContactoServicioWeb(@WebParam(name = "uid_cont") int uid_Cont) throws PersistentException {
-        String respuesta = "No se encontraron grupos del contacto";
-        Contacto contacto = new Contacto();
-        contacto.setUid_cont(uid_Cont);
-        List<Grupo_contacto> lista = new ArrayList<Grupo_contacto>();
-        lista = contacto.busquedaGrupoContactoCapaNegocio(contacto);
+    
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "buscarNotificacionesServicioWeb")
+    public String buscarNotificacionesServicioWeb(@WebParam(name = "uid_grupo") int uid_grupo) throws PersistentException {
+        String respuesta = "No se encontraron notificaciones del grupo";
+        Grupo_contacto grupo = new Grupo_contacto();
+        grupo.setUid_grupo(uid_grupo);
+        List<Notificacion> lista = new ArrayList<Notificacion>();
+        lista = grupo.buscarNotificacionesGrupoContactoCapaNegocio(grupo);
         Gson gson = new GsonBuilder().create();
         respuesta = gson.toJson(lista);
         return respuesta;
     }
     
-    @WebMethod(operationName = "miembrosDeGrupoServicioWeb")
-    public String miembrosDeGrupoServicioWeb(@WebParam(name = "uid_grupo") int uid_grupo) throws PersistentException {
-        String respuesta = "No se encontraron miembros del grupo";
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "buscarActividadesServicioWeb")
+    public String buscarActividadesServicioWeb(@WebParam(name = "uid_grupo") int uid_grupo) throws PersistentException {
+        String respuesta = "No se encontraron actividades del grupo";
         Grupo_contacto grupo = new Grupo_contacto();
         grupo.setUid_grupo(uid_grupo);
-        List<Contacto> lista = new ArrayList<Contacto>();
-        lista = grupo.busquedaMiembros(grupo);
+        List<Actividad> lista = new ArrayList<Actividad>();
+        lista = grupo.buscarActividadesGrupoContactoCapaNegocio(grupo);
         Gson gson = new GsonBuilder().create();
         respuesta = gson.toJson(lista);
         return respuesta;
     }
+    
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "leerActividadServicioWeb")
+    public String leerActividadServicioWeb(@WebParam(name = "uid_cont") int uid_cont, @WebParam(name = "uid_act") int uid_act) throws PersistentException{
+        String respuesta = "No se pudo leer la actividad";
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Date fecha = new Date();
+        String fechaCadena = sdf.format(fecha);
+        
+        Actividad_leida actLeida = new Actividad_leida();
+        actLeida.setFecha_leact(fechaCadena);
+        Contacto contacto = new Contacto();
+        contacto.setUid_cont(uid_cont);
+        Actividad actividad = new Actividad();
+        actividad.setUid_act(uid_act);
+        
+        try {
+            int resultado = actLeida.leerActividadCapaNegocio(contacto, actividad);
+            if (resultado != 0){
+                respuesta = "Se leyó la actividad, el uid de la lectura es: " + resultado + ", en la fecha: " + fechaCadena;
+            }
+        } catch (PersistenceException ex){
+            //Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta; 
+    }
+    
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "leerNotificacionServicioWeb")
+    public String leerNotificacionServicioWeb(@WebParam(name = "uid_cont") int uid_cont, @WebParam(name = "uid_noti") int uid_noti) throws PersistentException{
+        String respuesta = "No se pudo leer la notificacion";
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Date fecha = new Date();
+        String fechaCadena = sdf.format(fecha);
+        
+        Notificacion_leida notiLeida = new Notificacion_leida();
+        notiLeida.setFecha_lenoti(fechaCadena);
+        Contacto contacto = new Contacto();
+        contacto.setUid_cont(uid_cont);
+        Notificacion notificacion = new Notificacion();
+        notificacion.setUid_noti(uid_noti);
+        
+        try {
+            int resultado = notiLeida.leerNotificacionCapaNegocio(contacto, notificacion);
+            if (resultado != 0){
+                respuesta = "Se leyó la notificacion, el uid de la lectura es: " + resultado + ", en la fecha: " + fechaCadena;
+            }
+        } catch (PersistenceException ex){
+            //Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return respuesta;
+    }
+    
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "verLecturasActividadServicioWeb")
+    public String verLecturasActividadServicioWeb(@WebParam(name = "uid_act") int uid_act) throws PersistentException {
+        String respuesta = "Ningun miembro leyó esta actividad";
+        Actividad actividad = new Actividad();
+        Actividad_leida actLeida = new Actividad_leida();
+        actividad.setUid_act(uid_act);
+        List<Contacto> lista = new ArrayList<Contacto>();
+        lista = actLeida.verLecturaActividadCapaNegocio(actividad);
+        Gson gson = new GsonBuilder().create();
+        respuesta = gson.toJson(lista);
+        return respuesta;
+    }
+    
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "verLecturasNotificacionServicioWeb")
+    public String verLecturasNotificacionServicioWeb(@WebParam(name = "uid_noti") int uid_noti) throws PersistentException {
+        String respuesta = "Ningun miembro leyó esta notificacion";
+        Notificacion_leida notiLeida = new Notificacion_leida();
+        Notificacion notificacion = new Notificacion();
+        notificacion.setUid_noti(uid_noti);
+        List<Contacto> lista = new ArrayList<Contacto>();
+        lista = notiLeida.verLecturaNotificacionCapaNegocio(notificacion);
+        Gson gson = new GsonBuilder().create();
+        respuesta = gson.toJson(lista);
+        return respuesta;
+    }
+    
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "verActividadesDeGrupoServicioWeb")
+    public String verActividadesDeGrupoServicioWeb(@WebParam(name = "uid_grupo") int uid_grupo) throws PersistentException {
+        String respuesta = "No se encontró ninguna actividad en este grupo";
+        Actividad actividad = new Actividad();
+        Grupo_contacto grupoContacto = new Grupo_contacto();
+        grupoContacto.setUid_grupo(uid_grupo);
+        List<Actividad> lista = new ArrayList<Actividad>();
+        lista = actividad.verActividadesDeGrupoCapaNegocio(grupoContacto);
+        Gson gson = new GsonBuilder().create();
+        respuesta = gson.toJson(lista);
+        return respuesta;
+    }
+    
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "verNotificacionesDeGrupoServicioWeb")
+    public String verNotificacionesDeGrupoServicioWeb(@WebParam(name = "uid_grupo") int uid_grupo) throws PersistentException {
+        String respuesta = "No se encontró ninguna notificación en este grupo";
+        Notificacion notificacion = new Notificacion();
+        Grupo_contacto grupoContacto = new Grupo_contacto();
+        grupoContacto.setUid_grupo(uid_grupo);
+        List<Notificacion> lista = new ArrayList<Notificacion>();
+        lista = notificacion.verNotificacionesDeGrupoCapaNegocio(grupoContacto);
+        Gson gson = new GsonBuilder().create();
+        respuesta = gson.toJson(lista);
+        return respuesta;
+    }
+    
 }

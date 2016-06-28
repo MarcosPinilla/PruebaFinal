@@ -314,18 +314,6 @@
       <Comment>Uid de la actividad leida</Comment>
       <UserTypes/>
     </Column>
-    <Column name="nombre_leact">
-      <PrimaryKey>false</PrimaryKey>
-      <ForeignKey>false</ForeignKey>
-      <Type>9</Type>
-      <Length>10</Length>
-      <Nullable>false</Nullable>
-      <IDGenerator>native</IDGenerator>
-      <Unique>false</Unique>
-      <Index>false</Index>
-      <Comment>Registra si fue leido (1) o no (0)</Comment>
-      <UserTypes/>
-    </Column>
     <Column name="idContacto">
       <PrimaryKey>false</PrimaryKey>
       <ForeignKey>true</ForeignKey>
@@ -352,7 +340,7 @@
       <Comment>Id de la actividad que le llego al contacto</Comment>
       <UserTypes/>
     </Column>
-    <Column name="visto_leact">
+    <Column name="fecha_leact">
       <PrimaryKey>false</PrimaryKey>
       <ForeignKey>false</ForeignKey>
       <Type>27</Type>
@@ -375,18 +363,6 @@
       <Unique>false</Unique>
       <Index>false</Index>
       <Comment>Uid  de la notificaion leida</Comment>
-      <UserTypes/>
-    </Column>
-    <Column name="lectura_lenot">
-      <PrimaryKey>false</PrimaryKey>
-      <ForeignKey>false</ForeignKey>
-      <Type>9</Type>
-      <Length>10</Length>
-      <Nullable>false</Nullable>
-      <IDGenerator>native</IDGenerator>
-      <Unique>false</Unique>
-      <Index>false</Index>
-      <Comment>Registra si fue leido(1) o no(0)</Comment>
       <UserTypes/>
     </Column>
     <Column name="idContacto">
@@ -415,7 +391,7 @@
       <Comment>Id de la notificacion</Comment>
       <UserTypes/>
     </Column>
-    <Column name="visto_lenot">
+    <Column name="fecha_lenot">
       <PrimaryKey>false</PrimaryKey>
       <ForeignKey>false</ForeignKey>
       <Type>27</Type>
@@ -430,6 +406,8 @@
   <ForeignKey name="FKmembresia392047">
     <ReferenceTable>membresia</ReferenceTable>
     <ReferencedTable>contacto</ReferencedTable>
+    <OnUpdate>Cascade</OnUpdate>
+    <OnDelete>Cascade</OnDelete>
     <Columns>
       <Column>idContacto</Column>
     </Columns>
@@ -440,6 +418,8 @@
   <ForeignKey name="FKmembresia792148">
     <ReferenceTable>membresia</ReferenceTable>
     <ReferencedTable>grupo_contacto</ReferencedTable>
+    <OnUpdate>Cascade</OnUpdate>
+    <OnDelete>Cascade</OnDelete>
     <Columns>
       <Column>idGrupoContacto</Column>
     </Columns>
@@ -450,6 +430,8 @@
   <ForeignKey name="FKactividad118420">
     <ReferenceTable>actividad</ReferenceTable>
     <ReferencedTable>grupo_contacto</ReferencedTable>
+    <OnUpdate>Cascade</OnUpdate>
+    <OnDelete>Cascade</OnDelete>
     <Columns>
       <Column>idGrupo</Column>
     </Columns>
@@ -460,6 +442,8 @@
   <ForeignKey name="FKnotificaci7215">
     <ReferenceTable>notificacion</ReferenceTable>
     <ReferencedTable>grupo_contacto</ReferencedTable>
+    <OnUpdate>Cascade</OnUpdate>
+    <OnDelete>Cascade</OnDelete>
     <Columns>
       <Column>idGrupo</Column>
     </Columns>
@@ -470,6 +454,8 @@
   <ForeignKey name="FKactividad_12387">
     <ReferenceTable>actividad_leida</ReferenceTable>
     <ReferencedTable>actividad</ReferencedTable>
+    <OnUpdate>Cascade</OnUpdate>
+    <OnDelete>Cascade</OnDelete>
     <Columns>
       <Column>idActividad</Column>
     </Columns>
@@ -480,6 +466,8 @@
   <ForeignKey name="FKnotificaci479835">
     <ReferenceTable>notificacion_leida</ReferenceTable>
     <ReferencedTable>notificacion</ReferencedTable>
+    <OnUpdate>Cascade</OnUpdate>
+    <OnDelete>Cascade</OnDelete>
     <Columns>
       <Column>idNotificacion</Column>
     </Columns>
@@ -490,6 +478,8 @@
   <ForeignKey name="FKactividad_929185">
     <ReferenceTable>actividad_leida</ReferenceTable>
     <ReferencedTable>contacto</ReferencedTable>
+    <OnUpdate>Cascade</OnUpdate>
+    <OnDelete>Cascade</OnDelete>
     <Columns>
       <Column>idContacto</Column>
     </Columns>
@@ -500,6 +490,8 @@
   <ForeignKey name="FKnotificaci794716">
     <ReferenceTable>notificacion_leida</ReferenceTable>
     <ReferencedTable>contacto</ReferencedTable>
+    <OnUpdate>Cascade</OnUpdate>
+    <OnDelete>Cascade</OnDelete>
     <Columns>
       <Column>idContacto</Column>
     </Columns>
