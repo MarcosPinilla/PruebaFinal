@@ -6,6 +6,13 @@ import java.util.List;
 import org.orm.PersistentException;
 import org.orm.PersistentTransaction;
 
+/**
+ * Manages an notificaction so that it can be read by a contact
+ * @author Daniel Coronado
+ * @author Marcos Pinilla
+ * @version 1.3.1
+ * @since 1.3.0
+ */
 public class Notificacion_leida {
 
     private int uid_lenot;
@@ -45,6 +52,14 @@ public class Notificacion_leida {
         this.fecha_lenoti = fecha_lenoti;
     }
    
+    /**
+     * This method allows to read a particular group notification for a particular contact that group
+     * @param contacto Contacto
+     * @param notificacion Notificacion
+     * @return the uid of the read Notification
+     * @throws org.orm.PersistentException
+     * @since 1.3.0
+     */
     public int leerNotificacionCapaNegocio(Contacto contacto, Notificacion notificacion) throws PersistentException{
         PersistentTransaction t = orm.PruebaFinalPersistentManager.instance().getSession().beginTransaction();
         orm.Notificacion_leida lormNotiLe = new orm.Notificacion_leida();
@@ -70,6 +85,13 @@ public class Notificacion_leida {
         return respuesta;
     }
     
+    /**
+     * Allows to know that contacts and read notification
+     * @param notificacion Notification
+     * @return a list of contacts
+     * @throws org.orm.PersistentException
+     * @since 1.3.0
+     */
     public List<Contacto> verLecturaNotificacionCapaNegocio(Notificacion notificacion) throws PersistentException{
         List<Notificacion_leida> listaNotiLe = new ArrayList<Notificacion_leida>();
         List<orm.Notificacion_leida> listaNotiLes = new ArrayList<orm.Notificacion_leida>();

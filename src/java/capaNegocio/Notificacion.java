@@ -1,14 +1,17 @@
 package capaNegocio;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import org.orm.PersistentException;
 import org.orm.PersistentTransaction;
 
+/**
+ * Manages an notification
+ * @author Daniel Coronado
+ * @author Marcos Pinilla
+ * @version 1.3.1
+ * @since 1.2.0
+ */
 public class Notificacion {
 
     private int uid_noti;
@@ -48,6 +51,14 @@ public class Notificacion {
         this.mensaje_noti = mensaje_noti;
     }
 
+    /**
+     * Adding a notification method by storing it in the corresponding table in the database
+     * @param notificacion Notificacion
+     * @param grupo_contacto Grupo_contacto
+     * @throws org.orm.PersistentException
+     * @return the uid of the attached notificaction
+     * @since 1.2.0
+     */
     public int agregarNotificacionCapaNegocio (Notificacion notificacion, Grupo_contacto grupo_contacto) throws PersistentException{
         int respuesta = 0;
         PersistentTransaction t = orm.PruebaFinalPersistentManager.instance().getSession().beginTransaction();
@@ -71,6 +82,13 @@ public class Notificacion {
         return respuesta;
     }
 
+    /**
+     * It allows you to view the notifications associated with a group
+     * @param grupoContacto Grupo_contacto
+     * @return a list of the group's notificactions
+     * @throws org.orm.PersistentException
+     * @since 1.2.0
+     */
     public List<Notificacion> verNotificacionesDeGrupoCapaNegocio(Grupo_contacto grupoContacto) throws PersistentException{
         List<orm.Notificacion> listaNotis = new ArrayList<orm.Notificacion>();
         Notificacion noti = new Notificacion();
@@ -82,6 +100,13 @@ public class Notificacion {
         return listaNotificacionesGrupo;
     }
     
+    /**
+     * To find the id of a notification to be used in another class
+     * @param busqueda String to search
+     * @throws org.orm.PersistentException
+     * @return a list of notificactions
+     * @since 1.2.0
+     */
     public List<Notificacion> busquedaIdNotificacionCapaNegocio(String busqueda) throws PersistentException {
         List<Notificacion> listaNotificacion = new ArrayList<Notificacion>();
         List<orm.Notificacion> listaNotificaciones = new ArrayList<orm.Notificacion>();

@@ -123,7 +123,7 @@
   </Setting>
   <Setting type="256">
     <Driver>PostgreSQL</Driver>
-    <DriverFiles>C:\Users\Marcos\Desktop\Todo\connectors\postgresql-8.4-703.jdbc4.jar</DriverFiles>
+    <DriverFiles>C:\Users\danie\Desktop\postgresql-8.4-703.jdbc4.jar</DriverFiles>
     <Dialect>org.hibernate.dialect.PostgreSQLDialect</Dialect>
     <DriverClass>org.postgresql.Driver</DriverClass>
     <URL>jdbc:postgresql://localhost:5432/PruebaFinal</URL>

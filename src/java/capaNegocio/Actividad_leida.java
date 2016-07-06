@@ -1,11 +1,16 @@
 package capaNegocio;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import org.orm.PersistentException;
 import org.orm.PersistentTransaction;
 
+/**
+ * Manages an activity so that it can be read by a contact
+ * @author Daniel Coronado
+ * @author Marcos Pinilla
+ * @version 1.3.1
+ * @since 1.3.0
+ */
 public class Actividad_leida {
 
     private int uid_leact;
@@ -45,6 +50,14 @@ public class Actividad_leida {
         this.fecha_leact = fecha_leact;
     }
 
+    /**
+     * This method allows to read a particular group activity for a particular contact that group
+     * @param contacto Contacto
+     * @param actividad Actividad
+     * @return the uid of the read Activity
+     * @throws org.orm.PersistentException
+     * @since 1.3.0
+     */
     public int leerActividadCapaNegocio(Contacto contacto, Actividad actividad) throws PersistentException{
         PersistentTransaction t = orm.PruebaFinalPersistentManager.instance().getSession().beginTransaction();
         orm.Actividad_leida lormLeAct = new orm.Actividad_leida();
@@ -69,7 +82,7 @@ public class Actividad_leida {
         return respuesta;
     }
     
-    public List<Contacto> verLecturaActividadCapaNegocio(Actividad actividad) throws PersistentException{
+    /*public List<Contacto> verLecturaActividadCapaNegocio(Actividad actividad) throws PersistentException{
         List<orm.Actividad_leida> listaLeActs = new ArrayList<orm.Actividad_leida>();
         Contacto contacto = new Contacto();
         List<Contacto> listaContacto = new ArrayList<Contacto>();
@@ -78,6 +91,6 @@ public class Actividad_leida {
             listaContacto.add(contacto.busquedaIdContactoCapaNegocio("" + ormActLe.getIdContacto().getUid_cont()).get(0));
         }
         return listaContacto;
-    }
+    }*/
 
 }

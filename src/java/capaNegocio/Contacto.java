@@ -1,13 +1,17 @@
 package capaNegocio;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.orm.PersistentException;
 import org.orm.PersistentTransaction;
-import orm.Membresia;
-import capaNegocio.Grupo_contacto;
 
+/**
+ * Maintainer class to store business contact
+ * @author Daniel Coronado
+ * @author Marcos Pinilla
+ * @version 1.3.1
+ * @since 1.0.0
+ */
 public class Contacto {
 
     private int uid_cont;
@@ -83,6 +87,13 @@ public class Contacto {
         this.organizacion_cont = organizacion_cont;
     }
 
+    /**
+     * Adding a contact method by storing it in the corresponding table in the database
+     * @param contacto storing contact
+     * @throws org.orm.PersistentException
+     * @return the uid of the attached contact
+     * @since 1.0.0
+     */
     public int agregarContactoCapaNegocio(Contacto contacto) throws PersistentException{
         // TODO - implement Contacto.agregarContactoCapaNegocio
         int respuesta = 0;
@@ -108,6 +119,13 @@ public class Contacto {
         return respuesta;
     }
 
+    /** 
+     * This method eliminates the contact of the corresponding table in the database
+     * @param contacto storing contact
+     * @throws org.orm.PersistentException
+     * @return the uid of the attached contact
+     * @since 1.0.0
+     */
     public int eliminarContactoCapaNegocio(Contacto contacto) throws PersistentException{
         // TODO - implement Contacto.eliminarContactoCapaNegocio
         int respuesta = 0;
@@ -125,31 +143,52 @@ public class Contacto {
         return respuesta;
     }
 
+    /** 
+     * Edit the stored contact
+     * @param contacto storing contact
+     * @throws org.orm.PersistentException
+     * @return the uid of the attached contact
+     * @since 1.0.0
+     */
     public int editarContactoCapaNegocio(Contacto contacto) throws PersistentException{
         // TODO - implement Contacto.editarContactoCapaNegocio
         int respuesta = 0;
         PersistentTransaction t = orm.PruebaFinalPersistentManager.instance().getSession().beginTransaction();
         try {
             orm.Contacto lormContacto = orm.ContactoDAO.loadContactoByORMID(contacto.getUid_cont());
-            if (contacto.getNombre_cont()!=null){
+            
+            if (contacto.getNombre_cont().equals("")||contacto.getNombre_cont() == null){    
+            }else if (contacto.getNombre_cont() != null){
                 lormContacto.setNombre_cont(contacto.getNombre_cont());
             }
-            if (contacto.getApellido_cont()!=null){
+            
+            if (contacto.getApellido_cont().equals("")||contacto.getApellido_cont() == null){  
+            }else if (contacto.getApellido_cont() != null){
                 lormContacto.setApellido_cont(contacto.getApellido_cont());
             }
-            if (contacto.getTelefono_cont()!=null){
+            
+            if (contacto.getTelefono_cont().equals("")||contacto.getTelefono_cont() == null){ 
+            }else if (contacto.getTelefono_cont()!=null){
                 lormContacto.setTelefono_cont(contacto.getTelefono_cont());
             }
-            if (contacto.getMail_cont()!=null){
+            
+            if (contacto.getMail_cont().equals("")||contacto.getMail_cont() == null){
+            }else if (contacto.getMail_cont()!=null){
                 lormContacto.setMail_cont(contacto.getMail_cont());
             }
-            if (contacto.getCiudad_cont()!=null){
+            
+            if (contacto.getCiudad_cont().equals("")||contacto.getCiudad_cont() == null){
+            }else if (contacto.getCiudad_cont()!=null){
                 lormContacto.setCiudad_cont(contacto.getCiudad_cont());
             }
-            if (contacto.getOrganizacion_cont()!=null){
+            
+            if (contacto.getOrganizacion_cont().equals("")||contacto.getOrganizacion_cont()== null){
+            }else if (contacto.getOrganizacion_cont()!=null){
                 lormContacto.setOrganizacion_cont(contacto.getOrganizacion_cont());
             }
-            if (contacto.getImagen_cont()!=null){
+            
+            if (contacto.getImagen_cont().equals("")||contacto.getImagen_cont()== null){
+            }else if (contacto.getImagen_cont()!=null){
                 lormContacto.setImagen_cont(contacto.getImagen_cont());
             }
 
@@ -162,15 +201,22 @@ public class Contacto {
         return respuesta;
     }
 
-    public List<Contacto> busquedaSimpleContactoCapaNegocio(String busqueda) throws PersistentException{
+    /**
+     * Method to find a contact in the database by comparing the parameter entered with the data stored
+     * @param textoBusqueda String to search
+     * @throws org.orm.PersistentException
+     * @return a list of contacts found according to the parameter used in the search
+     * @since 1.0.0
+     */
+    public List<Contacto> busquedaSimpleContactoCapaNegocio(String textoBusqueda) throws PersistentException{
         // TODO - implement Contacto.busquedaSimpleContactoCapaNegocio
         List<Contacto> listaContacto = new ArrayList<Contacto>();
         List<orm.Contacto> listaContactos = new ArrayList<orm.Contacto>();
-        if (busqueda != null || !busqueda.equals("")){
-            listaContactos = orm.ContactoDAO.queryContacto("Contacto.nombre_cont='"+busqueda+
-                "' or Contacto.apellido_cont='"+busqueda+"' or Contacto.telefono_cont='"+busqueda+
-                "' or Contacto.mail_cont='"+busqueda+"' or Contacto.ciudad_cont='"+busqueda+
-                "' or Contacto.organizacion_cont='"+busqueda+"'", null);
+        if (textoBusqueda != null || !textoBusqueda.equals("")){
+            listaContactos = orm.ContactoDAO.queryContacto("Contacto.nombre_cont='"+textoBusqueda+
+                "' or Contacto.apellido_cont='"+textoBusqueda+"' or Contacto.telefono_cont='"+textoBusqueda+
+                "' or Contacto.mail_cont='"+textoBusqueda+"' or Contacto.ciudad_cont='"+textoBusqueda+
+                "' or Contacto.organizacion_cont='"+textoBusqueda+"' or Contacto.imagen_cont='"+textoBusqueda+"' ", null);
         }
         if (listaContactos!=null){
             for (orm.Contacto contactoOrm : listaContactos){
@@ -182,12 +228,20 @@ public class Contacto {
                 contactoNegocio.setMail_cont(contactoOrm.getMail_cont());
                 contactoNegocio.setCiudad_cont(contactoOrm.getCiudad_cont());
                 contactoNegocio.setOrganizacion_cont(contactoOrm.getOrganizacion_cont());
+                contactoNegocio.setImagen_cont(contactoOrm.getImagen_cont());
                 listaContacto.add(contactoNegocio);
             }
         }
         return listaContacto;
     }
 
+    /**
+     * Method to find a contact in the database by comparing the parameter entered with the data stored
+     * @param contacto Contacto to search
+     * @throws org.orm.PersistentException
+     * @return a list of contacts is according to the parameters entered in the advanced search
+     * @since 1.0.0
+     */
     public List<Contacto> busquedaAvanzadaContactoCapaNegocio(Contacto contacto) throws PersistentException{
             // TODO - implement Contacto.busquedaAvanzadaContactoCapaNegocio
         List<Contacto> listaContacto = new ArrayList<Contacto>();
@@ -218,7 +272,7 @@ public class Contacto {
             query+="and ";
         }
         if (contacto.getMail_cont()!=null && !contacto.getMail_cont().trim().equals("")) {
-            query+="Contacto._cont='"+contacto.getMail_cont()+"'";
+            query+="Contacto.mail_cont='"+contacto.getMail_cont()+"'";
         }
 
         if (((contacto.getNombre_cont()!=null && !contacto.getNombre_cont().trim().equals("")) || contacto.getApellido_cont()!=null && !contacto.getApellido_cont().trim().equals("") || 
@@ -261,6 +315,7 @@ public class Contacto {
                 contactoNegocio.setMail_cont(contactoOrm.getMail_cont());
                 contactoNegocio.setCiudad_cont(contactoOrm.getCiudad_cont());
                 contactoNegocio.setOrganizacion_cont(contactoOrm.getOrganizacion_cont());
+                contactoNegocio.setImagen_cont(contactoOrm.getImagen_cont());
 
                 listaContacto.add(contactoNegocio);
             }
@@ -268,6 +323,13 @@ public class Contacto {
         return listaContacto;
     }
 
+    /**
+     * To find the id of a contact to be used in another class
+     * @param busqueda String to search
+     * @throws org.orm.PersistentException
+     * @return a list of contacts
+     * @since 1.1.0
+     */
     public List<Contacto> busquedaIdContactoCapaNegocio(String busqueda) throws PersistentException {
         List<Contacto> listaContacto = new ArrayList<Contacto>();
         List<orm.Contacto> listaContactos = new ArrayList<orm.Contacto>();
@@ -290,7 +352,7 @@ public class Contacto {
         return listaContacto;
     }
 
-    public List<Membresia> busquedaMembresiaContacto(Contacto contacto) throws PersistentException {
+    /*public List<Membresia> busquedaMembresiaContacto(Contacto contacto) throws PersistentException {
 
         List<Membresia> listaMembresia = new ArrayList<Membresia>();
         List<orm.Contacto> listaContactos = new ArrayList<orm.Contacto>();
@@ -304,21 +366,15 @@ public class Contacto {
         }
         listaMembresia = Arrays.asList(listaMC);
         return listaMembresia;
-    }
+    }*/
 
-    //ESTE METODO NO VA
-    public List<Grupo_contacto> busquedaGruposContacto (List <Membresia> busquedaMembresia) throws PersistentException{
-        List<Grupo_contacto> listaGrupo = new ArrayList<Grupo_contacto>();
-        for (int i = 0; i < busquedaMembresia.size(); i++) {
-            Grupo_contacto grupo = new Grupo_contacto();
-            grupo.setNombre_grupo(busquedaMembresia.get(i).getIdGrupoContacto().getNombre_grupo());
-            grupo.setDescripcion_grupo(busquedaMembresia.get(i).getIdGrupoContacto().getDescripcion_grupo());
-            grupo.setUid_grupo(busquedaMembresia.get(i).getIdGrupoContacto().getUid_grupo());
-            listaGrupo.add(grupo);
-        }
-        return  listaGrupo;
-    } 
-
+    /**
+     * This method searches a contact groups only using the contact uid
+     * @param contacto Contacto
+     * @throws org.orm.PersistentException
+     * @return a list of groups
+     * @since 1.1.0
+     */
     public List<Grupo_contacto> busquedaGrupoContactoCapaNegocio(Contacto contacto) throws PersistentException {
         List<Grupo_contacto> listaGrupo = new ArrayList<Grupo_contacto>();
         List<orm.Membresia> listaMembs = new ArrayList<orm.Membresia>();

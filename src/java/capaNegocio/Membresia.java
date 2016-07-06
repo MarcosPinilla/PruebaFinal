@@ -1,8 +1,12 @@
 package capaNegocio;
 
-import org.orm.PersistentException;
-import org.orm.PersistentTransaction;
-
+/**
+ * This kind sends, receives and manages uid contacts and groups as well uid membership generated
+ * @author Daniel Coronado
+ * @author Marcos Pinilla
+ * @version 1.3.1
+ * @since 1.2.0
+ */
 public class Membresia {
 
     private int uid_membresia;
@@ -34,7 +38,7 @@ public class Membresia {
     }
 
     
-    //?????????????????????????????????????????????????????????
+    /*
     public int eliminarMembresiaCapaNegocio(Membresia membresia) throws PersistentException{
     // TODO - implement Contacto.eliminarContactoCapaNegocio
     int respuesta = 0;
@@ -50,6 +54,6 @@ public class Membresia {
         t.rollback();
     }
     return respuesta;
-    }
+    }*/
         
 }

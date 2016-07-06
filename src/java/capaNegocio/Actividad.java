@@ -1,15 +1,17 @@
 package capaNegocio;
 
-import java.text.SimpleDateFormat;
-import java.util.AbstractList;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import org.orm.PersistentException;
 import org.orm.PersistentTransaction;
 
+/**
+ * Manages an activity
+ * @author Daniel Coronado
+ * @author Marcos Pinilla
+ * @version 1.3.1
+ * @since 1.2.0
+ */
 public class Actividad {
 
     private int uid_act;
@@ -58,6 +60,14 @@ public class Actividad {
         this.uid_grupo = uid_grupo;
     }
 
+    /**
+     * Adding a activity method by storing it in the corresponding table in the database
+     * @param actividad Actividad
+     * @param grupo_contacto Grupo_contacto
+     * @throws org.orm.PersistentException
+     * @return the uid of the attached activity
+     * @since 1.2.0
+     */
     public int agregarActividadCapaNegocio (Actividad actividad, Grupo_contacto grupo_contacto)throws PersistentException{
         int respuesta = 0;
         PersistentTransaction t = orm.PruebaFinalPersistentManager.instance().getSession().beginTransaction();
@@ -80,6 +90,13 @@ public class Actividad {
         return respuesta;        
     }
 
+    /**
+     * It allows you to view the activities associated with a group
+     * @param grupoContacto Grupo_contacto
+     * @return a list of the group's activities
+     * @throws org.orm.PersistentException
+     * @since 1.2.0
+     */
     public List<Actividad> verActividadesDeGrupoCapaNegocio(Grupo_contacto grupoContacto) throws PersistentException{
         List<orm.Actividad> listaActs = new ArrayList<orm.Actividad>();
         Actividad act = new Actividad();
@@ -91,6 +108,13 @@ public class Actividad {
         return listaActividadesGrupo;
     }
     
+    /**
+     * To find the id of a activity to be used in another class
+     * @param busqueda String to search
+     * @throws org.orm.PersistentException
+     * @return a list of activities
+     * @since 1.2.0
+     */
     public List<Actividad> busquedaIdActividadCapaNegocio(String busqueda) throws PersistentException {
         List<Actividad> listaActividad = new ArrayList<Actividad>();
         List<orm.Actividad> listaActividades = new ArrayList<orm.Actividad>();
@@ -112,4 +136,21 @@ public class Actividad {
         return listaActividad;
     }
         
+    /**
+     * Allows to know that contacts and read activity
+     * @param actividad Actividad
+     * @return a list of contacts
+     * @throws org.orm.PersistentException
+     * @since 1.2.0
+     */
+    public List<Contacto> verLecturaActividadCapaNegocio(Actividad actividad) throws PersistentException{
+        List<orm.Actividad_leida> listaLeActs = new ArrayList<orm.Actividad_leida>();
+        Contacto contacto = new Contacto();
+        List<Contacto> listaContacto = new ArrayList<Contacto>();
+        listaLeActs = orm.Actividad_leidaDAO.queryActividad_leida("Actividad_leida.idActividad='" + actividad.getUid_act() + "' ", null);
+        for (orm.Actividad_leida ormActLe : listaLeActs){
+            listaContacto.add(contacto.busquedaIdContactoCapaNegocio("" + ormActLe.getIdContacto().getUid_cont()).get(0));
+        }
+        return listaContacto;
+    }
 }

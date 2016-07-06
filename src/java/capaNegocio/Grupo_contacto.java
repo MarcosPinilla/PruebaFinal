@@ -1,15 +1,17 @@
 package capaNegocio;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 import org.orm.PersistentException;
 import java.util.ArrayList;
-import java.util.Date;
-import org.hibernate.LockMode;
 import org.orm.PersistentTransaction;
 
-import capaNegocio.Actividad;
-
+/**
+ * Lets you manage a group
+ * @author Daniel Coronado
+ * @author Marcos Pinilla
+ * @version 1.3.1
+ * @since 1.1.0
+ */
 public class Grupo_contacto {
 
     private int uid_grupo;
@@ -49,6 +51,13 @@ public class Grupo_contacto {
         this.fecha_grupo = fecha_grupo;
     }
 
+    /**
+     * Adding a group method by storing it in the corresponding table in the database
+     * @param grupoContacto storing group
+     * @throws org.orm.PersistentException
+     * @return the uid of the attached group
+     * @since 1.1.0
+     */
     public int agregarGrupoCapaNegocio(Grupo_contacto grupoContacto) throws PersistentException{
         // TODO - implement Grupo_contacto.agregarGrupoCapaNegocio
         int respuesta = 0;
@@ -70,6 +79,13 @@ public class Grupo_contacto {
         return respuesta;
     }
 
+    /** 
+     * This method eliminates the group of the corresponding table in the database
+     * @param grupoContacto storing group
+     * @throws org.orm.PersistentException
+     * @return the uid of the attached group
+     * @since 1.1.0
+     */
     public int eliminarGrupoCapaNegocio(Grupo_contacto grupoContacto) throws PersistentException{
         // TODO - implement Grupo_contacto.eliminarGrupoCapaNegocio
         int respuesta = 0;
@@ -87,16 +103,26 @@ public class Grupo_contacto {
         return respuesta;
     }
 
+    /** 
+     * Edit the stored group
+     * @param grupoContacto storing group
+     * @throws org.orm.PersistentException
+     * @return the uid of the attached group
+     * @since 1.1.0
+     */
     public int editarGrupoCapaNegocio(Grupo_contacto grupoContacto) throws PersistentException{
         // TODO - implement Grupo_contacto.editarGrupoCapaNegocio
         int respuesta=0;
         PersistentTransaction t = orm.PruebaFinalPersistentManager.instance().getSession().beginTransaction();
         try {
             orm.Grupo_contacto lormGrupoContacto = orm.Grupo_contactoDAO.loadGrupo_contactoByORMID(grupoContacto.getUid_grupo());
-            if (grupoContacto.getNombre_grupo()!=null){
+            if (grupoContacto.getNombre_grupo().equals("")||grupoContacto.getNombre_grupo() == null){
+            }else if (grupoContacto.getNombre_grupo()!=null){
                 lormGrupoContacto.setNombre_grupo(grupoContacto.getNombre_grupo());
             }
-            if (grupoContacto.getDescripcion_grupo()!=null){
+            
+            if (grupoContacto.getNombre_grupo().equals("")||grupoContacto.getDescripcion_grupo()==null){  
+            }else if (grupoContacto.getDescripcion_grupo()!=null){
                 lormGrupoContacto.setDescripcion_grupo(grupoContacto.getDescripcion_grupo());
             }
 
@@ -112,6 +138,13 @@ public class Grupo_contacto {
         return respuesta;
     }
 
+    /**
+     * Method to find a group in the database by comparing the parameter entered with the data stored
+     * @param textoBusqueda String to search
+     * @throws org.orm.PersistentException
+     * @return a list of groups found according to the parameter used in the search
+     * @since 1.1.0
+     */
     public List<Grupo_contacto> busquedaSimpleGrupoContactoCapaNegocio(String textoBusqueda) throws PersistentException {
         // TODO - implement Grupo_contacto.busquedaSimpleGrupoContactoCapaNegocio
         List<Grupo_contacto> listaGrupoContacto = new ArrayList<Grupo_contacto>();
@@ -133,6 +166,13 @@ public class Grupo_contacto {
         return listaGrupoContacto;
     }
 
+    /**
+     * Method to find a group in the database by comparing the parameter entered with the data stored
+     * @param grupoContacto Group to search
+     * @throws org.orm.PersistentException
+     * @return a list of groups is according to the parameters entered in the advanced search
+     * @since 1.1.0
+     */
     public List<Grupo_contacto> busquedaAvanzadaGrupoContactoCapaNegocio(Grupo_contacto grupoContacto) throws PersistentException {
             // TODO - implement Grupo_contacto.busquedaAvanzadaGrupoContactoCapaNegocio
         List<Grupo_contacto> listaGrupo = new ArrayList<Grupo_contacto>();
@@ -162,6 +202,13 @@ public class Grupo_contacto {
         return listaGrupo;
     }
 
+    /**
+     * To find the members of a group
+     * @param grupoContacto Grupo_contacto
+     * @throws org.orm.PersistentException
+     * @return a list of contacts
+     * @since 1.1.0
+     */
     public List<Contacto> busquedaMiembros(Grupo_contacto grupoContacto) throws PersistentException{
             // TODO - implement Grupo_contacto.busquedaMiembros
         List<Contacto> listaContacto = new ArrayList<Contacto>();
@@ -175,13 +222,21 @@ public class Grupo_contacto {
         return listaContacto;
     }
 
-    public int agregarContactoAGrupo(Contacto contacto, Grupo_contacto grupo) throws PersistentException {
+    /**
+     * lets you link a contact to a group generating a membership
+     * @param contacto Contacto
+     * @param grupoContacto Grupo_contacto
+     * @throws org.orm.PersistentException
+     * @return the uid of the membership created
+     * @since 1.1.0
+     */
+    public int agregarContactoAGrupo(Contacto contacto, Grupo_contacto grupoContacto) throws PersistentException {
         int respuesta = 0;
         PersistentTransaction t = orm.PruebaFinalPersistentManager.instance().getSession().beginTransaction();
         try {
             orm.Membresia membresiaOrm = new orm.Membresia();
             orm.Contacto contactoOrm = orm.ContactoDAO.loadContactoByORMID(contacto.getUid_cont());
-            orm.Grupo_contacto grupoOrm = orm.Grupo_contactoDAO.loadGrupo_contactoByORMID(grupo.getUid_grupo());
+            orm.Grupo_contacto grupoOrm = orm.Grupo_contactoDAO.loadGrupo_contactoByORMID(grupoContacto.getUid_grupo());
 
             membresiaOrm.setIdContacto(contactoOrm);
             membresiaOrm.setIdGrupoContacto(grupoOrm);
@@ -195,11 +250,18 @@ public class Grupo_contacto {
         return respuesta;
     }
 
-    public List<Grupo_contacto> busquedaIdGrupoContactoCapaNegocio(String textoBusqueda) throws PersistentException {
+    /**
+     * To find the id of a group to be used in another class
+     * @param busqueda String to search
+     * @throws org.orm.PersistentException
+     * @return a list of groups
+     * @since 1.1.0
+     */
+    public List<Grupo_contacto> busquedaIdGrupoContactoCapaNegocio(String busqueda) throws PersistentException {
         List<Grupo_contacto> listaGrupo = new ArrayList<Grupo_contacto>();
         List<orm.Grupo_contacto> listaGrupos = new ArrayList<orm.Grupo_contacto>();
-        if (textoBusqueda != null || !textoBusqueda.equals("")){
-            listaGrupos = orm.Grupo_contactoDAO.queryGrupo_contacto("Grupo_contacto.uid_grupo='" + textoBusqueda + "' ", null);
+        if (busqueda != null || !busqueda.equals("")){
+            listaGrupos = orm.Grupo_contactoDAO.queryGrupo_contacto("Grupo_contacto.uid_grupo='" + busqueda + "' ", null);
         }
         if (listaGrupos != null){
             for (orm.Grupo_contacto grupoOrm : listaGrupos){
@@ -214,6 +276,13 @@ public class Grupo_contacto {
         return listaGrupo;
     }   
 
+    /**
+     * This method allows you to search a notice associated with a group
+     * @param grupoContacto Grupo_contacto
+     * @return a list of notifications belonging to the group
+     * @throws org.orm.PersistentException
+     * @since 1.2.0
+     */
     public List<Notificacion> buscarNotificacionesGrupoContactoCapaNegocio (Grupo_contacto grupoContacto) throws PersistentException{
         List<Notificacion> listaNotificacion = new ArrayList<Notificacion>();
         List<orm.Notificacion> listaNotificacions = new ArrayList<orm.Notificacion>();
@@ -231,6 +300,13 @@ public class Grupo_contacto {
         return listaNotificacion;
     }
 
+    /**
+     * This method allows you to search an associated activity to a group
+     * @param grupoContacto Grupo_contacto
+     * @return a list of activities belonging to the group
+     * @throws org.orm.PersistentException
+     * @since 1.2.0
+     */
     public List<Actividad> buscarActividadesGrupoContactoCapaNegocio (Grupo_contacto grupoContacto) throws PersistentException{
         List<Actividad> listaActividad = new ArrayList<Actividad>();
         List<orm.Actividad> listaActividads = new ArrayList<orm.Actividad>();
